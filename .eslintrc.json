@@ -51,16 +51,6 @@
       {
         "blankLine": "always",
         "prev": "*",
-        "next": "export"
-      },
-      {
-        "blankLine": "always",
-        "prev": "export",
-        "next": "*"
-      },
-      {
-        "blankLine": "always",
-        "prev": "*",
         "next": "class"
       }
     ]

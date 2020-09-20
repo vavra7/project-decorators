@@ -1,1 +1,3 @@
-export * from './routes.decorator';
+export * from './controller';
+export * from './routeDecorators';
+export * from './types';

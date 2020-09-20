@@ -9,6 +9,9 @@
     "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "sourceType": "module"
+  },
   "plugins": ["@typescript-eslint"],
   "rules": {
     "newline-before-return": 1,
@@ -22,6 +25,44 @@
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-non-null-assertion": 0,
     "@typescript-eslint/no-empty-interface": 0,
-    "@typescript-eslint/explicit-module-boundary-types": 0
+    "@typescript-eslint/explicit-module-boundary-types": 0,
+    "padding-line-between-statements": [
+      1,
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": "function"
+      },
+      {
+        "blankLine": "always",
+        "prev": "function",
+        "next": "*"
+      },
+      {
+        "blankLine": "always",
+        "prev": "import",
+        "next": "*"
+      },
+      {
+        "blankLine": "never",
+        "prev": "import",
+        "next": "import"
+      },
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": "export"
+      },
+      {
+        "blankLine": "always",
+        "prev": "export",
+        "next": "*"
+      },
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": "class"
+      }
+    ]
   }
 }

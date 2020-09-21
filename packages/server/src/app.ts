@@ -1,10 +1,10 @@
+import { buildRest } from '@project-decorators/express-decorators';
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
 import { baseUrl, port } from './config';
 import { ListingController, UserController } from './controllers';
-import { buildRest } from './decorators';
 import { UserResolver } from './resolvers';
 
 const app = express();

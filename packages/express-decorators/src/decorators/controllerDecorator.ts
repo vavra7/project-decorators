@@ -1,6 +1,6 @@
-import { MetadataKey } from './types';
+import { MetadataKey } from './../types';
 
-export const Controller = (routerPath = ''): ClassDecorator => {
+export function Controller(routerPath = ''): ClassDecorator {
   return target => {
     Reflect.defineMetadata(MetadataKey.RoutePath, routerPath, target);
 
@@ -8,4 +8,4 @@ export const Controller = (routerPath = ''): ClassDecorator => {
       Reflect.defineMetadata(MetadataKey.Routes, [], target);
     }
   };
-};
+}

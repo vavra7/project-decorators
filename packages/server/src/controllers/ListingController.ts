@@ -1,5 +1,4 @@
-import { Controller } from '../decorators/controller';
-import { Get } from '../decorators/routeDecorators';
+import { Controller, Get } from '@project-decorators/express-decorators';
 import { ListingHandler } from '../handlers/ListingHandler';
 
 @Controller('/listing')

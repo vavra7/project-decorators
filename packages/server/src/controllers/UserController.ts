@@ -1,6 +1,5 @@
-import { Controller } from '../decorators/controller';
-import { Get } from '../decorators/routeDecorators';
-import { UserHandler } from '../handlers';
+import { Controller, Get, Post } from '@project-decorators/express-decorators';
+import { User, UserHandler } from '../handlers';
 
 @Controller('/user')
 export class UserController {
@@ -10,16 +9,16 @@ export class UserController {
     this.handler = new UserHandler();
   }
 
-  @Get('/test')
-  public test(): string {
-    return this.handler.getUser();
-  }
-
-  /**
-   * Test decorated route
-   */
   @Get('/')
   public getUser(): string {
     return this.handler.getUser();
+  }
+
+  @Post('/')
+  public createUser(): User {
+    return this.handler.createUser({
+      firstName: 'Pepa',
+      lastName: 'Drozd'
+    });
   }
 }

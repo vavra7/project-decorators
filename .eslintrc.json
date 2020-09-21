@@ -25,34 +25,6 @@
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-non-null-assertion": 0,
     "@typescript-eslint/no-empty-interface": 0,
-    "@typescript-eslint/explicit-module-boundary-types": 0,
-    "padding-line-between-statements": [
-      1,
-      {
-        "blankLine": "always",
-        "prev": "*",
-        "next": "function"
-      },
-      {
-        "blankLine": "always",
-        "prev": "function",
-        "next": "*"
-      },
-      {
-        "blankLine": "always",
-        "prev": "import",
-        "next": "*"
-      },
-      {
-        "blankLine": "never",
-        "prev": "import",
-        "next": "import"
-      },
-      {
-        "blankLine": "always",
-        "prev": "*",
-        "next": "class"
-      }
-    ]
+    "@typescript-eslint/explicit-module-boundary-types": 0
   }
 }

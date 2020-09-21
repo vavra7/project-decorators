@@ -1,7 +1,4 @@
-export interface User {
-  firstName: string;
-  lastName: string;
-}
+import { User } from '../model/User';
 
 export class UserHandler {
   public getUser(): string {

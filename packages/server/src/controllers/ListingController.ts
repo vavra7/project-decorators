@@ -9,9 +9,6 @@ export class ListingController {
     this.handler = new ListingHandler();
   }
 
-  /**
-   * Test decorated route
-   */
   @Get('/')
   public getUser(): string {
     return this.handler.getListing();

@@ -1,5 +1,6 @@
 import { Controller, Get, Post } from '@project-decorators/express-decorators';
-import { User, UserHandler } from '../handlers';
+import { UserHandler } from '../handlers';
+import { User } from '../model/User';
 
 @Controller('/user')
 export class UserController {

@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 import { Controller } from '../decorators/controller';
 import { Get } from '../decorators/routeDecorators';
 import { UserHandler } from '../handlers';
@@ -12,7 +11,7 @@ export class UserController {
   }
 
   @Get('/test')
-  public test(req: Request, res: Response): string {
+  public test(): string {
     return this.handler.getUser();
   }
 
@@ -20,7 +19,7 @@ export class UserController {
    * Test decorated route
    */
   @Get('/')
-  public getUser(req: Request, res: Response): string {
+  public getUser(): string {
     return this.handler.getUser();
   }
 }

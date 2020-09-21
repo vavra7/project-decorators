@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@project-decorators/express-decorators';
+import { Authorized, Controller, Get, Post } from '@project-decorators/express-decorators';
 import { UserHandler } from '../handlers';
 import { User } from '../model/User';
 
@@ -15,6 +15,7 @@ export class UserController {
     return this.handler.getUser();
   }
 
+  @Authorized()
   @Post('/')
   public createUser(): User {
     return this.handler.createUser({

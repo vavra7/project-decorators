@@ -4,3 +4,7 @@ import { AuthChecker } from 'type-graphql';
 export const gqlAuthChecker: AuthChecker<ExpressContext> = () => {
   return false;
 };
+
+export const restAuthChecker = (): boolean => {
+  return false;
+};

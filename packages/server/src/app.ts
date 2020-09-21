@@ -3,9 +3,10 @@ import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
-import { gqlAuthChecker } from './auth';
+import { gqlAuthChecker, restAuthChecker } from './auth';
 import { baseUrl, port } from './config';
 import { ListingController, UserController } from './controllers';
+import { expressErrorsHandler } from './errors/expressErrorsHandler';
 import { UserResolver } from './resolvers';
 
 const app = express();
@@ -18,7 +19,8 @@ async function startServer(): Promise<void> {
 
   buildRest({
     app,
-    controllers: [UserController, ListingController]
+    controllers: [UserController, ListingController],
+    authChecker: restAuthChecker
   });
 
   const apolloServer = new ApolloServer({
@@ -26,6 +28,8 @@ async function startServer(): Promise<void> {
   });
 
   apolloServer.applyMiddleware({ app, cors: false });
+
+  app.use(expressErrorsHandler);
 
   return new Promise(resolve => {
     app.listen(port, resolve);

@@ -1,7 +1,12 @@
 export enum MetadataKey {
   RoutePath = 'routePath',
-  Routes = 'routes'
+  Routes = 'routes',
+  SecureMethods = 'secureMethods'
 }
+
+export type SecureMethods = {
+  [key: string]: boolean;
+};
 
 export interface RouteDefinition {
   routePath: string;

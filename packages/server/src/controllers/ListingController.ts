@@ -10,7 +10,7 @@ export class ListingController {
   }
 
   @Get('/')
-  public getUser(): string {
+  public getListing(): string {
     return this.handler.getListing();
   }
 }

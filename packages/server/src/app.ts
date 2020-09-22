@@ -3,15 +3,32 @@ import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
-import { gqlAuthChecker, expressAuthChecker } from './auth';
+import { createConnection } from 'typeorm';
+import { expressAuthChecker, gqlAuthChecker } from './auth';
 import { baseUrl, port } from './config';
 import { ListingController, UserController } from './controllers';
+import { User } from './entities';
 import { expressErrorsHandler } from './errors/expressErrorsHandler';
 import { UserResolver } from './resolvers';
 
 const app = express();
 
 async function startServer(): Promise<void> {
+  await createConnection({
+    type: 'postgres',
+    host: 'localhost',
+    port: 5432,
+    database: 'project-decorators',
+    username: 'user',
+    password: 'pass',
+    dropSchema: false,
+    synchronize: true,
+    logging: false,
+    entities: [User]
+  }).catch(err => {
+    console.error(err);
+  });
+
   const gqlSchema = await buildSchema({
     resolvers: [UserResolver],
     authChecker: gqlAuthChecker

@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:12
+    container_name: dev_project-decorators_postgres
+    environment:
+      POSTGRES_DB: project-decorators
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - type: volume
+        source: postgres-data
+        target: /var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  
+volumes:
+  postgres-data:
+    name: project-shared_postgres-data
+  store-data:
+    name: project-shared_store-data

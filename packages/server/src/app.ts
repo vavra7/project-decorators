@@ -3,7 +3,7 @@ import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
-import { gqlAuthChecker, restAuthChecker } from './auth';
+import { gqlAuthChecker, expressAuthChecker } from './auth';
 import { baseUrl, port } from './config';
 import { ListingController, UserController } from './controllers';
 import { expressErrorsHandler } from './errors/expressErrorsHandler';
@@ -20,7 +20,7 @@ async function startServer(): Promise<void> {
   buildRest({
     app,
     controllers: [UserController, ListingController],
-    authChecker: restAuthChecker
+    authChecker: expressAuthChecker
   });
 
   const apolloServer = new ApolloServer({

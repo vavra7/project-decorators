@@ -1,5 +1,5 @@
 import { Express, NextFunction, Request, Response } from 'express';
-import { MetadataKey, RouteDefinition, SecureMethods } from './types';
+import { MetadataKey, Middlewares, RouteDefinition, SecureMethods } from './types';
 
 export interface BuildRestOptions {
   app: Express;
@@ -16,6 +16,7 @@ export function buildRest(buildRestOptions: BuildRestOptions): void {
     const routes: RouteDefinition[] = Reflect.getMetadata(MetadataKey.Routes, Controller);
     const secureMethods: SecureMethods =
       Reflect.getMetadata(MetadataKey.SecureMethods, Controller) || {};
+    const middlewares: Middlewares = Reflect.getMetadata(MetadataKey.Middlewares, Controller) || {};
 
     routes.forEach(route => {
       const { httpMethod, routePath, controllerMethodName } = route;
@@ -50,6 +51,10 @@ export function buildRest(buildRestOptions: BuildRestOptions): void {
 
       if (secureMethods[controllerMethodName]) {
         handlers.push(authorizedHandler);
+      }
+
+      if (middlewares[controllerMethodName]) {
+        handlers.push(...middlewares[controllerMethodName]);
       }
 
       handlers.push(requestHandler);

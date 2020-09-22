@@ -1,4 +1,4 @@
-import { Controller, Get, UseMiddleware } from '@project-decorators/express-decorators';
+import { Controller, Get } from '@project-decorators/express-decorators';
 import { ListingHandler } from '../handlers/ListingHandler';
 
 @Controller('/listing')
@@ -10,7 +10,6 @@ export class ListingController {
   }
 
   @Get('/')
-  @UseMiddleware()
   public getListing(): string {
     return this.handler.getListing();
   }

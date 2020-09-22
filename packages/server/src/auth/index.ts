@@ -5,6 +5,6 @@ export const gqlAuthChecker: AuthChecker<ExpressContext> = () => {
   return false;
 };
 
-export const restAuthChecker = (): boolean => {
-  return false;
+export const expressAuthChecker = (): boolean => {
+  return true;
 };

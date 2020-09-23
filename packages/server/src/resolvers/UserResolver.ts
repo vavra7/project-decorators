@@ -1,6 +1,6 @@
-import { Authorized, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 import { UserHandler } from '../handlers';
-import { User } from '../model/User';
+import { RegisterUserInput, User } from '../model/UserModel';
 
 @Resolver()
 export class UserResolver {
@@ -15,12 +15,11 @@ export class UserResolver {
     return this.handler.getUser();
   }
 
-  @Authorized()
   @Mutation(() => User)
-  public createUser(): User {
-    return this.handler.createUser({
-      firstName: 'asdf',
-      lastName: 'asdf'
-    });
+  public registerUser(
+    @Arg('data')
+    data: RegisterUserInput
+  ): Promise<User> {
+    return this.handler.registerUser(data);
   }
 }

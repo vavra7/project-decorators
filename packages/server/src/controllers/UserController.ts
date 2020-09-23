@@ -1,14 +1,8 @@
-import {
-  Authorized,
-  Controller,
-  Get,
-  Post,
-  UseMiddleware
-} from '@project-decorators/express-decorators';
+import { Controller, Get, Post, UseMiddleware } from '@project-decorators/express-decorators';
 import { Request } from 'express';
 import { UserHandler } from '../handlers';
 import { bodyJson } from '../middlewares/expressMiddlewares';
-import { User } from '../model/User';
+import { User } from '../model';
 
 @Controller('/user')
 export class UserController {
@@ -24,11 +18,10 @@ export class UserController {
   }
 
   @Post('/')
-  @Authorized()
   @UseMiddleware(bodyJson)
-  public createUser(req: Request): User {
+  public registerUser(req: Request): Promise<User> {
     const user = req.body;
 
-    return this.handler.createUser(user);
+    return this.handler.registerUser(user);
   }
 }

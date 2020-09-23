@@ -1,30 +1,24 @@
-import { Field, ID, ObjectType } from 'type-graphql';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm';
 
-@ObjectType()
 @Entity()
-export class User extends BaseEntity {
-  @PrimaryColumn('uuid')
-  @Field(() => ID)
+export class UserEntity extends BaseEntity {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('citext', { unique: true })
-  @Field()
+  @Column('citext', { unique: false })
   email: string;
 
   @Column('varchar', { length: 50 })
-  @Field()
   firstName: string;
 
   @Column('varchar', { length: 50 })
-  @Field()
   lastName: string;
 
   @Column('text')
@@ -34,10 +28,8 @@ export class User extends BaseEntity {
   confirmed: boolean;
 
   @CreateDateColumn({ type: 'timestamp' })
-  @Field()
   createdAt: Date;
 
   @UpdateDateColumn({ type: 'timestamp' })
-  @Field()
   updatedAt: Date;
 }

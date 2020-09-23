@@ -7,7 +7,7 @@ import { createConnection } from 'typeorm';
 import { expressAuthChecker, gqlAuthChecker } from './auth';
 import { baseUrl, port } from './config';
 import { ListingController, UserController } from './controllers';
-import { User } from './entities';
+import { UserEntity } from './entities';
 import { expressErrorsHandler } from './errors/expressErrorsHandler';
 import { UserResolver } from './resolvers';
 
@@ -24,7 +24,7 @@ async function startServer(): Promise<void> {
     dropSchema: false,
     synchronize: true,
     logging: false,
-    entities: [User]
+    entities: [UserEntity]
   }).catch(err => {
     console.error(err);
   });

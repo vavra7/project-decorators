@@ -13,7 +13,6 @@ export class UserHandler {
       lastName: data.lastName,
       password: data.password
     }).save();
-
     return user;
   }
 }

@@ -4,22 +4,22 @@ import { Field, ID, InputType, ObjectType } from 'type-graphql';
 @ObjectType()
 export class User {
   @Field(() => ID)
-  id: string;
+  public id: string;
 
   @Field()
-  email: string;
+  public email: string;
 
   @Field()
-  firstName: string;
+  public firstName: string;
 
   @Field()
-  lastName: string;
+  public lastName: string;
 
   @Field()
-  createdAt: Date;
+  public createdAt: Date;
 
   @Field()
-  updatedAt: Date;
+  public updatedAt: Date;
 }
 
 @InputType()
@@ -27,17 +27,17 @@ export class RegisterUserInput {
   @Length(5, 100)
   @IsEmail()
   @Field(() => String)
-  email: string;
+  public email: string;
 
   @Length(2, 100)
   @Field(() => String)
-  firstName: string;
+  public firstName: string;
 
   @Length(2, 100)
   @Field(() => String)
-  lastName: string;
+  public lastName: string;
 
   @Length(5, 100)
   @Field(() => String)
-  password: string;
+  public password: string;
 }

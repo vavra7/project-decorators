@@ -14,7 +14,6 @@
   },
   "plugins": ["@typescript-eslint"],
   "rules": {
-    "newline-before-return": 1,
     "@typescript-eslint/explicit-function-return-type": [
       1,
       {

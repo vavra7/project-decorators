@@ -21,7 +21,6 @@ export class UserController {
   @UseMiddleware(bodyJson)
   public registerUser(req: Request): Promise<User> {
     const user = req.body;
-
     return this.handler.registerUser(user);
   }
 }

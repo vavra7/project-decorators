@@ -28,26 +28,20 @@ async function startServer(): Promise<void> {
   }).catch(err => {
     console.error(err);
   });
-
   const gqlSchema = await buildSchema({
     resolvers: [UserResolver],
     authChecker: gqlAuthChecker
   });
-
   buildRest({
     app,
     controllers: [UserController, ListingController],
     authChecker: expressAuthChecker
   });
-
   const apolloServer = new ApolloServer({
     schema: gqlSchema
   });
-
   apolloServer.applyMiddleware({ app, cors: false });
-
   app.use(expressErrorsHandler);
-
   return new Promise(resolve => {
     app.listen(port, resolve);
   });

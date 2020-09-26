@@ -1,4 +1,4 @@
-import { Controller, Get, Post, UseMiddleware } from '@project-decorators/express-decorators';
+import { Controller, Get } from '@project-decorators/type-express';
 import { Request } from 'express';
 import { UserHandler } from '../handlers';
 import { bodyJson } from '../middlewares/expressMiddlewares';
@@ -17,8 +17,8 @@ export class UserController {
     return this.handler.getUser();
   }
 
-  @Post('/')
-  @UseMiddleware(bodyJson)
+  // @Post('/')
+  // @UseMiddleware(bodyJson)
   public registerUser(req: Request): Promise<User> {
     const user = req.body;
     return this.handler.registerUser(user);

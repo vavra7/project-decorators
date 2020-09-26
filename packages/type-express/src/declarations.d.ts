@@ -1,6 +1,6 @@
 declare namespace NodeJS {
   interface Global {
-    TypeExpressMetadataStorage: import('./metadata/MetadataStorage').MetadataStorage;
+    typeExpressMetadataStorage: import('./metadata/MetadataStorage').MetadataStorage;
   }
 }
 

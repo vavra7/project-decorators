@@ -1,9 +1,10 @@
 import { getMetadataStorage } from '../metadata/MetadataStorage';
 
-export function Controller(): ClassDecorator {
+export function Controller(path = '/'): ClassDecorator {
   return target => {
     getMetadataStorage().collectControllerClassMetadata({
-      target
+      target,
+      path
     });
   };
 }

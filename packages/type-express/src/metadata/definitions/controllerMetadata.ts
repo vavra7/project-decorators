@@ -1,11 +1,11 @@
 export interface ControllerMetadata {
   methodName: string;
-  target: Function;
+  class: Function;
   path: string;
   controllerClassMetadata?: ControllerClassMetadata;
 }
 
 export interface ControllerClassMetadata {
-  target: Function;
+  class: Function;
   path: string;
 }

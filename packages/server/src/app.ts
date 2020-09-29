@@ -3,12 +3,12 @@ import { ApolloServer } from 'apollo-server-express';
 import express, { Application, Router } from 'express';
 import { GraphQLSchema } from 'graphql';
 import 'reflect-metadata';
-import { buildSchema } from 'type-graphql';
+import { buildSchema } from '@project-decorators/type-graphql';
 import { Connection, createConnection } from 'typeorm';
 import { gqlAuthChecker } from './auth';
 import { baseUrl, port } from './config';
 import { ListingController, UserController } from './controllers';
-import { UserEntity } from './entities';
+import { User } from './entities';
 import { expressErrorsHandler } from './errors/expressErrorsHandler';
 import { UserResolver } from './resolvers';
 
@@ -56,7 +56,7 @@ class App {
   }
 
   public async start(): Promise<void> {
-    // this.createDbConnection();
+    this.createDbConnection();
     const [schema, routes] = await Promise.all([this.buildGqlSchema(), this.buildRestRoutes()]);
     const apolloServer = new ApolloServer({
       schema
@@ -79,10 +79,10 @@ class App {
       database: 'project-decorators',
       username: 'user',
       password: 'pass',
-      dropSchema: false,
+      dropSchema: true,
       synchronize: true,
       logging: false,
-      entities: [UserEntity]
+      entities: [User]
     }).catch(err => {
       console.error(err);
     });

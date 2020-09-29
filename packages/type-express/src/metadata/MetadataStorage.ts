@@ -4,6 +4,7 @@ import { ensureReflectMetadataExists } from './utils';
 export class MetadataStorage {
   public controllerClasses: Array<ControllerClassMetadata> = [];
   public getRoutes: Array<ControllerMetadata> = [];
+  public postRoutes: Array<ControllerMetadata> = [];
 
   constructor() {
     ensureReflectMetadataExists();
@@ -13,18 +14,30 @@ export class MetadataStorage {
     this.controllerClasses.push(definition);
   }
 
-  public collectGetHandlerMetadata(definition: ControllerMetadata): void {
+  public collectGetMetadata(definition: ControllerMetadata): void {
     this.getRoutes.push(definition);
   }
 
-  public build(): void {
-    this.buildControllersMetadata(this.getRoutes);
+  public collectPostMetadata(definition: ControllerMetadata): void {
+    this.postRoutes.push(definition);
   }
 
+  /**
+   * Put all metadata together
+   */
+  public build(): void {
+    this.buildControllersMetadata(this.getRoutes);
+    this.buildControllersMetadata(this.postRoutes);
+  }
+
+  /**
+   * Method is assigning class metadata
+   * to http method's metadata
+   */
   private buildControllersMetadata(controllerMetadata: Array<ControllerMetadata>): void {
     controllerMetadata.forEach(meta => {
       const controllerClassMetadata = this.controllerClasses.find(
-        controller => controller.target === meta.target
+        controller => controller.class === meta.class
       );
       meta.controllerClassMetadata = controllerClassMetadata;
     });

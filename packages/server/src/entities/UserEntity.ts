@@ -1,3 +1,4 @@
+import { Field, ID, ObjectType } from '@project-decorators/type-graphql';
 import {
   BaseEntity,
   Column,
@@ -8,28 +9,37 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class UserEntity extends BaseEntity {
+@ObjectType()
+export class User extends BaseEntity {
+  @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  public id: string;
 
+  @Field()
   @Column('citext', { unique: false })
-  email: string;
+  public email: string;
 
+  @Field()
   @Column('varchar', { length: 50 })
-  firstName: string;
+  public firstName: string;
 
+  @Field()
   @Column('varchar', { length: 50 })
-  lastName: string;
+  public lastName: string;
 
+  @Field()
   @Column('text')
-  password: string;
+  public password: string;
 
+  @Field()
   @Column('bool', { default: false })
-  confirmed: boolean;
+  public confirmed: boolean;
 
+  @Field()
   @CreateDateColumn({ type: 'timestamp' })
-  createdAt: Date;
+  public createdAt: Date;
 
+  @Field()
   @UpdateDateColumn({ type: 'timestamp' })
-  updatedAt: Date;
+  public updatedAt: Date;
 }

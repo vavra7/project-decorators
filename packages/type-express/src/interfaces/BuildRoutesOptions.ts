@@ -6,4 +6,6 @@ export interface BuildRoutesOptions {
   controllers: NonEmptyArray<Function>;
   router: Router;
   authChecker?: AuthChecker;
+  // TODO: TYPE
+  container?: any;
 }

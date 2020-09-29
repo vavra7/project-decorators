@@ -1,5 +1,5 @@
-import { UserEntity } from '../entities';
-import { RegisterUserInput, User } from '../model';
+import { User } from '../entities';
+import { RegisterUserInput } from '../model';
 
 export class UserHandler {
   public getUser(): string {
@@ -7,12 +7,13 @@ export class UserHandler {
   }
 
   public async registerUser(data: RegisterUserInput): Promise<User> {
-    const user = await UserEntity.create({
+    const user = await User.create({
       email: data.email,
       firstName: data.firstName,
       lastName: data.lastName,
       password: data.password
     }).save();
+
     return user;
   }
 }

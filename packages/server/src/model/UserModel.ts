@@ -1,26 +1,5 @@
+import { Field, InputType } from '@project-decorators/type-graphql';
 import { IsEmail, Length } from 'class-validator';
-import { Field, ID, InputType, ObjectType } from 'type-graphql';
-
-@ObjectType()
-export class User {
-  @Field(() => ID)
-  public id: string;
-
-  @Field()
-  public email: string;
-
-  @Field()
-  public firstName: string;
-
-  @Field()
-  public lastName: string;
-
-  @Field()
-  public createdAt: Date;
-
-  @Field()
-  public updatedAt: Date;
-}
 
 @InputType()
 export class RegisterUserInput {

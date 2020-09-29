@@ -1,6 +1,7 @@
-import { Arg, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Mutation, Query, Resolver } from '@project-decorators/type-graphql';
+import { User } from '../entities';
 import { UserHandler } from '../handlers';
-import { RegisterUserInput, User } from '../model/UserModel';
+import { RegisterUserInput } from '../model/UserModel';
 
 @Resolver()
 export class UserResolver {
@@ -8,6 +9,11 @@ export class UserResolver {
 
   constructor() {
     this.handler = new UserHandler();
+  }
+
+  @Query(() => String)
+  public anotherTestGetUser(): string {
+    return this.handler.getUser();
   }
 
   @Query(() => String)

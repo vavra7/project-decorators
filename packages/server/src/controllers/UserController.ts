@@ -16,15 +16,12 @@ export class UserController {
     return this.handler.getUser();
   }
 
-  // @UseMiddleware(bodyJson)
-  @Post('/:hi')
+  @Post('/')
   public registerUser(
     @Body() registerUserInput: RegisterUserInput,
-    @Params() params: number
+    @Params() params: any
   ): Promise<User> {
-    console.log('from controller', registerUserInput);
-    // const user = req.body;
-    // return this.handler.registerUser(user);
+    registerUserInput.hashPassword();
     return this.handler.registerUser(registerUserInput);
   }
 }

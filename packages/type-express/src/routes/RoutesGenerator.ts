@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import path from 'path';
 import { BuildRoutesOptions, ControllerHandler, ExpressContext, ExpressMiddleware } from '../types';
 import { getMetadataStorage } from '../metadata';
-import { RequestHandlerMetadata } from '../metadata/definitions';
+import { HandlerParamMetadata, RequestHandlerMetadata } from '../metadata/definitions';
 import { Context } from './Context';
 
 export class RoutesGenerator extends Context {
@@ -85,19 +85,29 @@ export class RoutesGenerator extends Context {
     handlerMetadata: RequestHandlerMetadata,
     expressContext: ExpressContext
   ): Array<any> {
-    if (!handlerMetadata.paramsMetadata) return [];
+    if (!handlerMetadata.paramsMetadata?.length) return [];
     const params: Array<any> = [];
     for (let i = 0; i < handlerMetadata.paramsMetadata.length; i++) {
       const paramMetadata = handlerMetadata.paramsMetadata.find(it => it.parameterIndex === i);
       switch (paramMetadata!.paramKind) {
         case 'params':
-          params.push(expressContext.req.params);
+          params.push(this.convertParamsToInstance(expressContext.req.params, paramMetadata!));
           break;
         case 'body':
-          params.push(expressContext.req.body);
+          params.push(this.convertParamsToInstance(expressContext.req.body, paramMetadata!));
       }
     }
     return params;
+  }
+
+  /**
+   * Converts params to metadata reflected class type
+   */
+  private convertParamsToInstance(data: any, paramMetadata: HandlerParamMetadata): any {
+    if (!data) return data;
+    const simpleTypes: Function[] = [String, Boolean, Number, Date, Array, Promise];
+    if (simpleTypes.includes(data.constructor)) return data;
+    return Object.assign(new paramMetadata.type(), data);
   }
 
   /**

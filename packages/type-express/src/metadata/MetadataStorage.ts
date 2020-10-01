@@ -1,10 +1,15 @@
-import { ControllerClassMetadata, ControllerMetadata } from './definitions';
+import {
+  ControllerClassMetadata,
+  RequestHandlerMetadata,
+  HandlerParamMetadata
+} from './definitions';
 import { ensureReflectMetadataExists } from './utils';
 
 export class MetadataStorage {
   public controllerClasses: Array<ControllerClassMetadata> = [];
-  public getRoutes: Array<ControllerMetadata> = [];
-  public postRoutes: Array<ControllerMetadata> = [];
+  public getRoutes: Array<RequestHandlerMetadata> = [];
+  public postRoutes: Array<RequestHandlerMetadata> = [];
+  public handlerParams: Array<HandlerParamMetadata> = [];
 
   constructor() {
     ensureReflectMetadataExists();
@@ -14,12 +19,16 @@ export class MetadataStorage {
     this.controllerClasses.push(definition);
   }
 
-  public collectGetMetadata(definition: ControllerMetadata): void {
+  public collectGetMetadata(definition: RequestHandlerMetadata): void {
     this.getRoutes.push(definition);
   }
 
-  public collectPostMetadata(definition: ControllerMetadata): void {
+  public collectPostMetadata(definition: RequestHandlerMetadata): void {
     this.postRoutes.push(definition);
+  }
+
+  public collectParamsMetadata(definition: HandlerParamMetadata): void {
+    this.handlerParams.push(definition);
   }
 
   /**
@@ -31,15 +40,19 @@ export class MetadataStorage {
   }
 
   /**
-   * Method is assigning class metadata
-   * to http method's metadata
+   * Attaches ControllerClassMetadata and HandlerParamMetadata
+   * to RequestHandlerMetadata
    */
-  private buildControllersMetadata(controllerMetadata: Array<ControllerMetadata>): void {
-    controllerMetadata.forEach(meta => {
-      const controllerClassMetadata = this.controllerClasses.find(
+  private buildControllersMetadata(requestHandlerMetadata: Array<RequestHandlerMetadata>): void {
+    requestHandlerMetadata.forEach(meta => {
+      const controllerClass = this.controllerClasses.find(
         controller => controller.class === meta.class
       );
-      meta.controllerClassMetadata = controllerClassMetadata;
+      meta.classMetadata = controllerClass;
+      const handlerParams = this.handlerParams.filter(
+        param => param.class === meta.class && param.methodName === meta.methodName
+      );
+      meta.paramsMetadata = handlerParams;
     });
   }
 }

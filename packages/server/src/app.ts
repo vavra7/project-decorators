@@ -11,6 +11,7 @@ import { ListingController, UserController } from './controllers';
 import { User } from './entities';
 import { expressErrorsHandler } from './errors/expressErrorsHandler';
 import { UserResolver } from './resolvers';
+import { bodyJson } from './middlewares/expressMiddlewares';
 
 // const app = express();
 
@@ -98,7 +99,8 @@ class App {
   private buildRestRoutes(): Promise<Router> {
     return buildRoutes({
       controllers: [ListingController, UserController],
-      router: express.Router()
+      router: express.Router(),
+      bodyParser: bodyJson
     });
   }
 }

@@ -1,4 +1,4 @@
-export type TClass<T> = { new (...args: any[]): T } | Function;
+import { Container, TClass } from '../types';
 
 /**
  * Default inversion of control container.
@@ -25,7 +25,7 @@ export class DefaultContainer {
 export class IOCContainer {
   private readonly defaultContainer = new DefaultContainer();
 
-  constructor(iocContainerOrContainerGetter?: any) {
+  constructor(iocContainerOrContainerGetter?: Container) {
     // TODO: option to insert custom container
     if (iocContainerOrContainerGetter) {
       console.error('Todo: implement custom container');

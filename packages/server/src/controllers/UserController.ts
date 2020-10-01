@@ -1,8 +1,7 @@
-import { Controller, Get, Post } from '@project-decorators/type-express';
-import { Request } from 'express';
+import { Body, Controller, Get, Params, Post } from '@project-decorators/type-express';
 import { User } from '../entities';
 import { UserHandler } from '../handlers';
-import { bodyJson } from '../middlewares/expressMiddlewares';
+import { RegisterUserInput } from '../model';
 
 @Controller('/user')
 export class UserController {
@@ -18,15 +17,14 @@ export class UserController {
   }
 
   // @UseMiddleware(bodyJson)
-  @Post('/')
-  public registerUser(req: Request): Promise<User> {
+  @Post('/:hi')
+  public registerUser(
+    @Body() registerUserInput: RegisterUserInput,
+    @Params() params: number
+  ): Promise<User> {
+    console.log('from controller', registerUserInput);
     // const user = req.body;
     // return this.handler.registerUser(user);
-    return this.handler.registerUser({
-      email: 'adsf@asdf.cz',
-      firstName: 'Pepa2',
-      lastName: 'Drozd2',
-      password: 'asdfsdaf'
-    });
+    return this.handler.registerUser(registerUserInput);
   }
 }

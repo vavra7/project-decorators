@@ -4,6 +4,7 @@ import { BuildRoutesOptions, ControllerHandler, ExpressContext, ExpressMiddlewar
 import { getMetadataStorage } from '../metadata';
 import { HandlerParamMetadata, RequestHandlerMetadata } from '../metadata/definitions';
 import { Context } from './Context';
+import { validateInput } from '../utils/validator';
 
 export class RoutesGenerator extends Context {
   constructor(options: BuildRoutesOptions) {
@@ -20,30 +21,41 @@ export class RoutesGenerator extends Context {
   /**
    * Build Get routes
    */
-  private buildGetRoutes(): void {
-    const filteredGetRoutes = this.filterControllersMetadataByControllers(
-      getMetadataStorage().getRoutes
-    );
-    filteredGetRoutes.forEach(handlerMetadata => {
-      const routePath = path.join(handlerMetadata.classMetadata?.path || '/', handlerMetadata.path);
-      const controllerHandler = this.createControllerHandler(handlerMetadata);
-      this.router['get'](routePath, controllerHandler);
+  private buildGetRoutes(): Promise<void> {
+    return new Promise<void>(resolve => {
+      const filteredGetRoutes = this.filterControllersMetadataByControllers(
+        getMetadataStorage().getRoutes
+      );
+      filteredGetRoutes.forEach(handlerMetadata => {
+        this.routeBuilder('get', handlerMetadata);
+      });
+      resolve();
     });
   }
 
   /**
    * Build Post routes
    */
-  private buildPostRoutes(): void {
-    const filteredPostRoutes = this.filterControllersMetadataByControllers(
-      getMetadataStorage().postRoutes
-    );
-    filteredPostRoutes.forEach(handlerMetadata => {
-      const routePath = path.join(handlerMetadata.classMetadata?.path || '/', handlerMetadata.path);
-      const middlewares = this.createHandlers(handlerMetadata);
-      const controllerHandler = this.createControllerHandler(handlerMetadata);
-      this.router['post'](routePath, ...middlewares, controllerHandler);
+  private buildPostRoutes(): Promise<void> {
+    return new Promise<void>(resolve => {
+      const filteredPostRoutes = this.filterControllersMetadataByControllers(
+        getMetadataStorage().postRoutes
+      );
+      filteredPostRoutes.forEach(handlerMetadata => {
+        this.routeBuilder('post', handlerMetadata);
+      });
+      resolve();
     });
+  }
+
+  /**
+   * General route builder
+   */
+  private routeBuilder(method: 'get' | 'post', handlerMetadata: RequestHandlerMetadata): void {
+    const routePath = path.join(handlerMetadata.classMetadata?.path || '/', handlerMetadata.path);
+    const middlewares = this.createHandlers(handlerMetadata);
+    const controllerHandler = this.createControllerHandler(handlerMetadata);
+    this.router[method](routePath, ...middlewares, controllerHandler);
   }
 
   /**
@@ -51,17 +63,19 @@ export class RoutesGenerator extends Context {
    */
   private createControllerHandler(handlerMetadata: RequestHandlerMetadata): ControllerHandler {
     const instance: any = this.container.getInstance(handlerMetadata.class as any);
-    const handler = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+    return async (req: Request, res: Response, next: NextFunction): Promise<any> => {
       const expressContext: ExpressContext = { req, res, next };
-      const params = this.createParams(handlerMetadata, expressContext);
+      const params = await this.createParams(handlerMetadata, expressContext);
       try {
+        for (let i = 0; i < params.length; i++) {
+          await validateInput(params[i]);
+        }
         const result = await instance[handlerMetadata.methodName](...params);
         res.json(result);
       } catch (err) {
         next(err);
       }
     };
-    return handler;
   }
 
   /**
@@ -84,20 +98,21 @@ export class RoutesGenerator extends Context {
   private createParams(
     handlerMetadata: RequestHandlerMetadata,
     expressContext: ExpressContext
-  ): Array<any> {
+  ): Promise<Array<any>> | Array<any> {
     if (!handlerMetadata.paramsMetadata?.length) return [];
     const params: Array<any> = [];
     for (let i = 0; i < handlerMetadata.paramsMetadata.length; i++) {
       const paramMetadata = handlerMetadata.paramsMetadata.find(it => it.parameterIndex === i);
       switch (paramMetadata!.paramKind) {
         case 'params':
-          params.push(this.convertParamsToInstance(expressContext.req.params, paramMetadata!));
+          params.push(expressContext.req.params);
           break;
         case 'body':
           params.push(this.convertParamsToInstance(expressContext.req.body, paramMetadata!));
+          break;
       }
     }
-    return params;
+    return Promise.all(params);
   }
 
   /**

@@ -1,15 +1,13 @@
 import { Arg, Mutation, Query, Resolver } from '@project-decorators/type-graphql';
+import { Inject } from 'typedi';
 import { User } from '../entities';
 import { UserHandler } from '../handlers';
 import { RegisterUserInput } from '../model/UserModel';
 
 @Resolver()
 export class UserResolver {
+  @Inject()
   private handler: UserHandler;
-
-  constructor() {
-    this.handler = new UserHandler();
-  }
 
   @Query(() => String)
   public anotherTestGetUser(): string {

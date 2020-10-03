@@ -21,18 +21,27 @@ export class DefaultContainer {
 /**
  * General inversion of control container.
  * Provides custom or default container.
+ * Logic copied from package type-graphgl.
  */
 export class IOCContainer {
   private readonly defaultContainer = new DefaultContainer();
+  private insertedContainer?: any;
 
-  constructor(iocContainerOrContainerGetter?: Container) {
-    // TODO: option to insert custom container
-    if (iocContainerOrContainerGetter) {
-      console.error('Todo: implement custom container');
+  constructor(insertedContainer?: Container) {
+    if (
+      insertedContainer &&
+      'get' in insertedContainer &&
+      typeof insertedContainer.get === 'function'
+    ) {
+      this.insertedContainer = insertedContainer;
     }
   }
 
-  public getInstance<T>(someClass: TClass<T>): T {
-    return this.defaultContainer.get(someClass);
+  public getInstance<T>(someClass: TClass<T>): any {
+    if (this.insertedContainer) {
+      return this.insertedContainer.get(someClass);
+    } else {
+      return this.defaultContainer.get(someClass);
+    }
   }
 }

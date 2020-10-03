@@ -17,4 +17,5 @@ export function expressErrorsHandler(
       }
     ]
   });
+  // res.status(500).json(err);
 }

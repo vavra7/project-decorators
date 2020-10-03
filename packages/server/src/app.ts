@@ -12,42 +12,7 @@ import { User } from './entities';
 import { expressErrorsHandler } from './errors/expressErrorsHandler';
 import { UserResolver } from './resolvers';
 import { bodyJson } from './middlewares/expressMiddlewares';
-
-// const app = express();
-
-// async function startServer(): Promise<void> {
-// await createConnection({
-//   type: 'postgres',
-//   host: 'localhost',
-//   port: 5432,
-//   database: 'project-decorators',
-//   username: 'user',
-//   password: 'pass',
-//   dropSchema: false,
-//   synchronize: true,
-//   logging: false,
-//   entities: [UserEntity]
-// }).catch(err => {
-//   console.error(err);
-// });
-// const gqlSchema = await buildSchema({
-//   resolvers: [UserResolver],
-//   authChecker: gqlAuthChecker
-// });
-// buildRest({
-//   app,
-//   controllers: [UserController],
-//   authChecker: expressAuthChecker
-// });
-// const apolloServer = new ApolloServer({
-//   schema: gqlSchema
-// });
-// apolloServer.applyMiddleware({ app, cors: false });
-// app.use(expressErrorsHandler);
-// return new Promise(resolve => {
-//   app.listen(port, resolve);
-// });
-// }
+import Container from 'typedi';
 
 class App {
   private app: Application;
@@ -92,7 +57,8 @@ class App {
   private buildGqlSchema(): Promise<GraphQLSchema> {
     return buildSchema({
       resolvers: [UserResolver],
-      authChecker: gqlAuthChecker
+      authChecker: gqlAuthChecker,
+      container: Container
     });
   }
 
@@ -100,12 +66,10 @@ class App {
     return buildRoutes({
       controllers: [ListingController, UserController],
       router: express.Router(),
-      bodyParser: bodyJson
+      bodyParser: bodyJson,
+      container: Container
     });
   }
 }
 
 new App().start();
-
-// console.log((globalThis as any).typeExpressMetadataStorage);
-// console.log((globalThis as any).TypeGraphQLMetadataStorage);

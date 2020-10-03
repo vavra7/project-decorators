@@ -3,6 +3,7 @@
     "app",
     "citext",
     "dev",
+    "graphgl",
     "middlewares",
     "no",
     "node",
@@ -13,6 +14,7 @@
     "src",
     "ts",
     "ts node dev no notify respawn src app",
+    "typedi",
     "typeorm",
     "varchar"
   ]

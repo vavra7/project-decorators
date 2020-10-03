@@ -3,16 +3,16 @@ import { ApolloServer } from 'apollo-server-express';
 import express, { Application, Router } from 'express';
 import { GraphQLSchema } from 'graphql';
 import 'reflect-metadata';
-import { buildSchema } from '@project-decorators/type-graphql';
+import { buildSchema } from 'type-graphql';
+import { Container } from 'typedi';
 import { Connection, createConnection } from 'typeorm';
 import { gqlAuthChecker } from './auth';
 import { baseUrl, port } from './config';
 import { ListingController, UserController } from './controllers';
 import { User } from './entities';
-import { expressErrorsHandler } from './errors/expressErrorsHandler';
-import { UserResolver } from './resolvers';
+import { apolloErrorHandler, expressErrorHandler } from './errors/handlers';
 import { bodyJson } from './middlewares/expressMiddlewares';
-import Container from 'typedi';
+import { UserResolver } from './resolvers';
 
 class App {
   private app: Application;
@@ -24,9 +24,7 @@ class App {
   public async start(): Promise<void> {
     this.createDbConnection();
     const [schema, routes] = await Promise.all([this.buildGqlSchema(), this.buildRestRoutes()]);
-    const apolloServer = new ApolloServer({
-      schema
-    });
+    const apolloServer = new ApolloServer({ schema, formatError: apolloErrorHandler });
     apolloServer.applyMiddleware({ app: this.app, cors: false });
     this.app.use(routes);
     this.afterRoutesInit();
@@ -34,7 +32,7 @@ class App {
   }
 
   private afterRoutesInit(): void {
-    this.app.use(expressErrorsHandler);
+    this.app.use(expressErrorHandler);
   }
 
   private createDbConnection(): Promise<void | Connection> {

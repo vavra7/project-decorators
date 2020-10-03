@@ -16,6 +16,7 @@ export class UserController {
 
   @Post('/')
   public registerUser(@Body() registerUserInput: RegisterUserInput): Promise<User> {
+    throw new Error('pes');
     return this.handler.registerUser(registerUserInput);
   }
 }

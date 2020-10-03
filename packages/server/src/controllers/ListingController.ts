@@ -5,7 +5,7 @@ import { ListingHandler } from '../handlers/ListingHandler';
 export class ListingController {
   private handler: ListingHandler;
 
-  public constructor() {
+  constructor() {
     this.handler = new ListingHandler();
   }
 

@@ -1,5 +1,5 @@
-import { Field, InputType } from '@project-decorators/type-graphql';
 import { IsEmail, Length } from 'class-validator';
+import { Field, InputType } from 'type-graphql';
 
 @InputType()
 export class RegisterUserInput {

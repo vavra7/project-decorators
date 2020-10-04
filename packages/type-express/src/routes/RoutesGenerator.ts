@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import path from 'path';
-import { BuildRoutesOptions, ControllerHandler, ExpressContext, ExpressMiddleware } from '../types';
 import { getMetadataStorage } from '../metadata';
 import { HandlerParamMetadata, RequestHandlerMetadata } from '../metadata/definitions';
-import { Context } from './Context';
+import { BuildRoutesOptions, ControllerHandler, ExpressContext, ExpressMiddleware } from '../types';
 import { validateInput } from '../utils/validator';
+import { Context } from './Context';
 
 export class RoutesGenerator extends Context {
   constructor(options: BuildRoutesOptions) {
@@ -53,7 +53,7 @@ export class RoutesGenerator extends Context {
    */
   private routeBuilder(method: 'get' | 'post', handlerMetadata: RequestHandlerMetadata): void {
     const routePath = path.join(handlerMetadata.classMetadata?.path || '/', handlerMetadata.path);
-    const middlewares = this.createHandlers(handlerMetadata);
+    const middlewares = this.createMiddlewares(handlerMetadata);
     const controllerHandler = this.createControllerHandler(handlerMetadata);
     this.router[method](routePath, ...middlewares, controllerHandler);
   }
@@ -81,7 +81,7 @@ export class RoutesGenerator extends Context {
   /**
    * Generates all middlewares running before controller handler
    */
-  private createHandlers(handlerMetadata: RequestHandlerMetadata): Array<ExpressMiddleware> {
+  private createMiddlewares(handlerMetadata: RequestHandlerMetadata): Array<ExpressMiddleware> {
     const middlewares: Array<ExpressMiddleware> = [];
     if (
       this.bodyParser &&

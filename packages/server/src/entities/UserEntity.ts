@@ -16,7 +16,7 @@ export class User extends BaseEntity {
   public id: string;
 
   @Field()
-  @Column('citext', { unique: false })
+  @Column('citext', { unique: true })
   public email: string;
 
   @Field()

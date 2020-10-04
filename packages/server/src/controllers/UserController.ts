@@ -7,7 +7,7 @@ import { RegisterUserInput } from '../model';
 @Controller('/user')
 export class UserController {
   @Inject()
-  private handler: UserHandler;
+  private readonly handler: UserHandler;
 
   @Get('/')
   public getUser(): string {
@@ -16,7 +16,6 @@ export class UserController {
 
   @Post('/')
   public registerUser(@Body() registerUserInput: RegisterUserInput): Promise<User> {
-    throw new Error('pes');
     return this.handler.registerUser(registerUserInput);
   }
 }

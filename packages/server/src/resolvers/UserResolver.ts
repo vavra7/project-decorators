@@ -1,21 +1,17 @@
-import { Arg, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Authorized, Mutation, Query, Resolver } from 'type-graphql';
 import { Inject } from 'typedi';
 import { User } from '../entities';
 import { UserHandler } from '../handlers';
-import { RegisterUserInput } from '../model/UserModel';
+import { LoginUserResponse, RegisterUserInput } from '../model';
 
 @Resolver()
 export class UserResolver {
   @Inject()
-  private handler: UserHandler;
+  private readonly handler: UserHandler;
 
+  @Authorized()
   @Query(() => String)
-  public anotherTestGetUser(): string {
-    return this.handler.getUser();
-  }
-
-  @Query(() => String)
-  public getUser(): string {
+  public meUser(): string {
     return this.handler.getUser();
   }
 
@@ -25,5 +21,13 @@ export class UserResolver {
     data: RegisterUserInput
   ): Promise<User> {
     return this.handler.registerUser(data);
+  }
+
+  @Mutation(() => LoginUserResponse)
+  public loginUser(
+    @Arg('email') email: string,
+    @Arg('password') password: string
+  ): Promise<LoginUserResponse> {
+    return this.handler.loginUser(email, password);
   }
 }

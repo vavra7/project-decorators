@@ -19,8 +19,4 @@ export class RegisterUserInput {
   @Length(5, 100)
   @Field(() => String)
   public password: string;
-
-  public hashPassword(): void {
-    this.password = `${this.password}<--HASHED`;
-  }
 }

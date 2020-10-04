@@ -15,10 +15,16 @@ export function apolloErrorHandler(err: GraphQLError): FormattedError {
       }
     };
   } else {
+    const code =
+      typeof (err.originalError as any).getCode === 'function'
+        ? (err.originalError as any).getCode()
+        : ErrorCode.InternalServerError;
+    const extensions = err.extensions?.exception;
+    delete extensions.message;
     formattedError = {
       message: err.message,
-      code: ErrorCode.InternalServerError,
-      extensions: err.extensions?.exception
+      code,
+      extensions
     };
   }
   return formattedError;

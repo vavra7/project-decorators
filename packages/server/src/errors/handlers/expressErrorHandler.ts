@@ -26,17 +26,22 @@ export function expressErrorHandler(
     };
     res.status(422).json(errorResponse);
   } else {
+    const code =
+      typeof (err as any).getCode === 'function'
+        ? (err as any).getCode()
+        : ErrorCode.InternalServerError;
+    const status = typeof (err as any).getStatus === 'function' ? (err as any).getStatus() : 500;
     errorResponse = {
       errors: [
         {
           message: err.message,
-          code: ErrorCode.InternalServerError,
+          code,
           extensions: {
             stacktrace: err.stack?.split('\n')
           }
         }
       ]
     };
-    res.status(500).json(errorResponse);
+    res.status(status).json(errorResponse);
   }
 }

@@ -6,12 +6,12 @@ import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
 import { Container } from 'typedi';
 import { Connection, createConnection } from 'typeorm';
-import { gqlAuthChecker } from './auth';
 import { baseUrl, port } from './config';
 import { ListingController, UserController } from './controllers';
 import { User } from './entities';
 import { apolloErrorHandler, expressErrorHandler } from './errors/handlers';
-import { bodyJson } from './middlewares/expressMiddlewares';
+import { authChecker } from './middlewares/apollo';
+import { bodyJsonParser } from './middlewares/express';
 import { UserResolver } from './resolvers';
 
 class App {
@@ -24,7 +24,11 @@ class App {
   public async start(): Promise<void> {
     this.createDbConnection();
     const [schema, routes] = await Promise.all([this.buildGqlSchema(), this.buildRestRoutes()]);
-    const apolloServer = new ApolloServer({ schema, formatError: apolloErrorHandler });
+    const apolloServer = new ApolloServer({
+      schema,
+      formatError: apolloErrorHandler,
+      context: ctx => ctx
+    });
     apolloServer.applyMiddleware({ app: this.app, cors: false });
     this.app.use(routes);
     this.afterRoutesInit();
@@ -43,7 +47,7 @@ class App {
       database: 'project-decorators',
       username: 'user',
       password: 'pass',
-      dropSchema: true,
+      dropSchema: false,
       synchronize: true,
       logging: false,
       entities: [User]
@@ -55,7 +59,7 @@ class App {
   private buildGqlSchema(): Promise<GraphQLSchema> {
     return buildSchema({
       resolvers: [UserResolver],
-      authChecker: gqlAuthChecker,
+      authChecker: authChecker,
       container: Container
     });
   }
@@ -64,7 +68,7 @@ class App {
     return buildRoutes({
       controllers: [ListingController, UserController],
       router: express.Router(),
-      bodyParser: bodyJson,
+      bodyParser: bodyJsonParser,
       container: Container
     });
   }

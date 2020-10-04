@@ -83,6 +83,9 @@ export class RoutesGenerator extends Context {
    */
   private createMiddlewares(handlerMetadata: RequestHandlerMetadata): Array<ExpressMiddleware> {
     const middlewares: Array<ExpressMiddleware> = [];
+    if (this.authChecker && handlerMetadata?.authorized) {
+      middlewares.push(this.authChecker);
+    }
     if (
       this.bodyParser &&
       handlerMetadata?.paramsMetadata?.some(meta => meta.paramKind === 'body')

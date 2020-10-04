@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@project-decorators/type-express';
+import { Authorized, Body, Controller, Get, Post } from '@project-decorators/type-express';
 import { Inject } from 'typedi';
 import { User } from '../entities';
 import { UserHandler } from '../handlers';
@@ -10,6 +10,7 @@ export class UserController {
   private readonly handler: UserHandler;
 
   @Get('/')
+  @Authorized()
   public getUser(): string {
     return this.handler.getUser();
   }

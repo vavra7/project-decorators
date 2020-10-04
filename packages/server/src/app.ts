@@ -10,8 +10,8 @@ import { baseUrl, port } from './config';
 import { ListingController, UserController } from './controllers';
 import { User } from './entities';
 import { apolloErrorHandler, expressErrorHandler } from './errors/handlers';
-import { authChecker } from './middlewares/apollo';
-import { bodyJsonParser } from './middlewares/express';
+import { authChecker as apolloAuthChecker } from './middlewares/apollo';
+import { authChecker as expressAuthChecker, bodyJsonParser } from './middlewares/express';
 import { UserResolver } from './resolvers';
 
 class App {
@@ -59,7 +59,7 @@ class App {
   private buildGqlSchema(): Promise<GraphQLSchema> {
     return buildSchema({
       resolvers: [UserResolver],
-      authChecker: authChecker,
+      authChecker: apolloAuthChecker,
       container: Container
     });
   }
@@ -69,7 +69,8 @@ class App {
       controllers: [ListingController, UserController],
       router: express.Router(),
       bodyParser: bodyJsonParser,
-      container: Container
+      container: Container,
+      authChecker: expressAuthChecker
     });
   }
 }

@@ -1,3 +1,4 @@
+import { AuthorizedHandlerMetadata } from './AuthorizedHandlerMetadata';
 import { ControllerClassMetadata } from './ControllerClassMetadata';
 import { HandlerParamMetadata } from './HandlerParamMetadata';
 
@@ -7,4 +8,5 @@ export interface RequestHandlerMetadata {
   path: string;
   classMetadata?: ControllerClassMetadata;
   paramsMetadata?: Array<HandlerParamMetadata>;
+  authorized?: AuthorizedHandlerMetadata;
 }

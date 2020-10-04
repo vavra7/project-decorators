@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { BuildRoutesOptions } from '../types';
 import { getMetadataStorage } from '../metadata';
 import { RoutesGenerator } from '../routes';
+import { BuildRoutesOptions } from '../types';
 
 export async function buildRoutes(options: BuildRoutesOptions): Promise<Router> {
   getMetadataStorage().build();

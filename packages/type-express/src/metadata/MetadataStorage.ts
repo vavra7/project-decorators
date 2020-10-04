@@ -1,7 +1,8 @@
 import {
+  AuthorizedHandlerMetadata,
   ControllerClassMetadata,
-  RequestHandlerMetadata,
-  HandlerParamMetadata
+  HandlerParamMetadata,
+  RequestHandlerMetadata
 } from './definitions';
 import { ensureReflectMetadataExists } from './utils';
 
@@ -10,6 +11,7 @@ export class MetadataStorage {
   public getRoutes: Array<RequestHandlerMetadata> = [];
   public postRoutes: Array<RequestHandlerMetadata> = [];
   public handlerParams: Array<HandlerParamMetadata> = [];
+  public authorizedHandlers: Array<AuthorizedHandlerMetadata> = [];
 
   constructor() {
     ensureReflectMetadataExists();
@@ -31,6 +33,10 @@ export class MetadataStorage {
     this.handlerParams.push(definition);
   }
 
+  public collectAuthorizedMetadata(definition: AuthorizedHandlerMetadata): void {
+    this.authorizedHandlers.push(definition);
+  }
+
   /**
    * Put all metadata together
    */
@@ -40,8 +46,8 @@ export class MetadataStorage {
   }
 
   /**
-   * Attaches ControllerClassMetadata and HandlerParamMetadata
-   * to RequestHandlerMetadata
+   * Attaches ControllerClassMetadata, AuthorizedHandlerMetadata
+   * and HandlerParamMetadata to RequestHandlerMetadata
    */
   private buildControllersMetadata(requestHandlerMetadata: Array<RequestHandlerMetadata>): void {
     requestHandlerMetadata.forEach(meta => {
@@ -49,6 +55,10 @@ export class MetadataStorage {
         controller => controller.class === meta.class
       );
       meta.classMetadata = controllerClass;
+      const authorizedHandler = this.authorizedHandlers.find(
+        authorized => authorized.class === meta.class && authorized.methodName === meta.methodName
+      );
+      meta.authorized = authorizedHandler;
       const handlerParams = this.handlerParams.filter(
         param => param.class === meta.class && param.methodName === meta.methodName
       );

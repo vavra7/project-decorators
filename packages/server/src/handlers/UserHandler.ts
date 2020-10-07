@@ -1,8 +1,8 @@
 import { Inject, Service } from 'typedi';
 import { User } from '../entities';
-import { IncorrectEmailOrPasswordError } from '../errors';
+import { DataNotFoundError, IncorrectEmailOrPasswordError, NotAuthenticatedError } from '../errors';
 import { LoginUserResponse, RegisterUserInput } from '../model';
-import { BcryptPasswordService, JwtAuthService } from '../services';
+import { BcryptPasswordService, HttpContextService, JwtAuthService } from '../services';
 
 @Service()
 export class UserHandler {
@@ -12,8 +12,19 @@ export class UserHandler {
   @Inject()
   private readonly authService: JwtAuthService;
 
+  @Inject()
+  private readonly httpContext: HttpContextService;
+
   public getUser(): string {
     return 'This is an user';
+  }
+
+  public async getMeUser(): Promise<User> {
+    const userId = this.httpContext.get('userId');
+    if (!userId) throw new NotAuthenticatedError();
+    const user = await User.findOne(userId);
+    if (!user) throw new DataNotFoundError('User');
+    return user;
   }
 
   public async registerUser(registerUserInput: RegisterUserInput): Promise<User> {
@@ -26,7 +37,9 @@ export class UserHandler {
     if (!user) throw new IncorrectEmailOrPasswordError();
     const verified = await this.passwordService.compare(password, user.password);
     if (!verified) throw new IncorrectEmailOrPasswordError();
-    const { token, expiresIn } = this.authService.generateAccessToken();
+    const { token, expiresIn } = this.authService.generateAccessToken({
+      userId: user.id
+    });
     return Object.assign(new LoginUserResponse(), { accessToken: token, expiresIn });
   }
 }

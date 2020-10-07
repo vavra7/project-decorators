@@ -10,9 +10,9 @@ export class UserResolver {
   private readonly handler: UserHandler;
 
   @Authorized()
-  @Query(() => String)
-  public meUser(): string {
-    return this.handler.getUser();
+  @Query(() => User)
+  public meUser(): Promise<User> {
+    return this.handler.getMeUser();
   }
 
   @Mutation(() => User)

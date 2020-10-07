@@ -1,30 +1,43 @@
 import { sign, verify } from 'jsonwebtoken';
 import { Service } from 'typedi';
 
-export type generatedTokenData = {
+export interface TokenGenerateData {
   token: string;
   expiresIn: number;
-};
+}
 
-const ACCESS_TOKEN_EXPIRATION = 30;
+export interface TokenPayload {
+  userId: string;
+}
+
+export interface TokenVerifyPayload extends TokenPayload {
+  iat: number;
+  exp: number;
+}
+
+const ACCESS_TOKEN_EXPIRATION = 3000;
 
 @Service()
 export class JwtAuthService {
-  public generateAccessToken(): generatedTokenData {
+  public generateAccessToken(payload: TokenPayload): TokenGenerateData {
     return {
-      token: sign({}, process.env.ACCESS_TOKEN_SECRET || 'ACCESS_TOKEN_SECRET', {
+      token: sign(payload, process.env.ACCESS_TOKEN_SECRET || 'ACCESS_TOKEN_SECRET', {
         expiresIn: ACCESS_TOKEN_EXPIRATION
       }),
       expiresIn: ACCESS_TOKEN_EXPIRATION
     };
   }
 
-  public verifyAccessToken(token: string): boolean {
+  public verifyAccessToken(token: string): null | TokenVerifyPayload {
+    let tokenVerifyPayload: TokenVerifyPayload;
     try {
-      verify(token, process.env.ACCESS_TOKEN_SECRET || 'ACCESS_TOKEN_SECRET');
+      tokenVerifyPayload = verify(
+        token,
+        process.env.ACCESS_TOKEN_SECRET || 'ACCESS_TOKEN_SECRET'
+      ) as any;
     } catch {
-      return false;
+      return null;
     }
-    return true;
+    return tokenVerifyPayload;
   }
 }

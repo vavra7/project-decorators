@@ -13,6 +13,7 @@ import { apolloErrorHandler, expressErrorHandler } from './errors/handlers';
 import { authChecker as apolloAuthChecker } from './middlewares/apollo';
 import { authChecker as expressAuthChecker, bodyJsonParser } from './middlewares/express';
 import { UserResolver } from './resolvers';
+import { httpContextMiddleware } from './services';
 
 class App {
   private app: Application;
@@ -23,6 +24,7 @@ class App {
 
   public async start(): Promise<void> {
     this.createDbConnection();
+    this.beforeRoutesInit();
     const [schema, routes] = await Promise.all([this.buildGqlSchema(), this.buildRestRoutes()]);
     const apolloServer = new ApolloServer({
       schema,
@@ -33,6 +35,10 @@ class App {
     this.app.use(routes);
     this.afterRoutesInit();
     this.app.listen(port, () => console.log(`ready - started server on ${baseUrl}`));
+  }
+
+  private beforeRoutesInit(): void {
+    this.app.use(httpContextMiddleware);
   }
 
   private afterRoutesInit(): void {

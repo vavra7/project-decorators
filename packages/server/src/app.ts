@@ -12,7 +12,7 @@ import { User } from './entities';
 import { apolloErrorHandler, expressErrorHandler } from './errors/handlers';
 import { authChecker as apolloAuthChecker } from './middlewares/apollo';
 import { authChecker as expressAuthChecker, bodyJsonParser } from './middlewares/express';
-import { UserResolver } from './resolvers';
+import { AuthResolver, UserResolver } from './resolvers';
 import { httpContextMiddleware } from './services';
 
 class App {
@@ -64,7 +64,7 @@ class App {
 
   private buildGqlSchema(): Promise<GraphQLSchema> {
     return buildSchema({
-      resolvers: [UserResolver],
+      resolvers: [AuthResolver, UserResolver],
       authChecker: apolloAuthChecker,
       container: Container
     });

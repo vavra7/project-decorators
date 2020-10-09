@@ -15,9 +15,18 @@ services:
     ports:
       - '5432:5432'
 
+  redis:
+    image: redis:6
+    container_name: dev_project-decorators_redis
+    volumes:
+      - type: volume
+        source: redis-data
+        target: /var/lib/redis
+    ports:
+      - '6379:6397'
   
 volumes:
   postgres-data:
-    name: project-shared_postgres-data
-  store-data:
-    name: project-shared_store-data
+    name: dev_project-decorators_postgres-data
+  redis-data:
+    name: dev_project-decorators_redis-data

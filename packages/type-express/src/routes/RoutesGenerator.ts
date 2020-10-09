@@ -113,6 +113,9 @@ export class RoutesGenerator extends Context {
         case 'body':
           params.push(this.convertParamsToInstance(expressContext.req.body, paramMetadata!));
           break;
+        case 'ctx':
+          params.push(expressContext);
+          break;
       }
     }
     return Promise.all(params);

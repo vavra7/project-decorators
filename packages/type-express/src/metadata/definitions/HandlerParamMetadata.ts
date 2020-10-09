@@ -1,5 +1,5 @@
 export interface HandlerParamMetadata {
-  paramKind: 'body' | 'params';
+  paramKind: 'body' | 'params' | 'ctx';
   class: Function;
   methodName: string;
   parameterIndex: number;

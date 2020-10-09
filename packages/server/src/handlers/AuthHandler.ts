@@ -1,8 +1,18 @@
 import { Inject } from 'typedi';
 import { User } from '../entities';
 import { IncorrectEmailOrPasswordError } from '../errors';
-import { LoginAuthResponse } from '../model';
 import { BcryptPasswordService, JwtAuthService } from '../services';
+
+type AuthTokens = {
+  accessTokenData: {
+    token: string;
+    expiresIn: number;
+  };
+  refreshTokenData: {
+    token: string;
+    expiresIn: number;
+  };
+};
 
 export class AuthHandler {
   @Inject()
@@ -11,14 +21,13 @@ export class AuthHandler {
   @Inject()
   private readonly authService: JwtAuthService;
 
-  public async loginAuth(email: string, password: string): Promise<LoginAuthResponse> {
+  public async loginAuth(email: string, password: string): Promise<AuthTokens> {
     const user = await User.findOne({ where: { email } });
     if (!user) throw new IncorrectEmailOrPasswordError();
-    const verified = await this.passwordService.compare(password, user.password);
-    if (!verified) throw new IncorrectEmailOrPasswordError();
-    const { token, expiresIn } = this.authService.generateAccessToken({
-      userId: user.id
-    });
-    return Object.assign(new LoginAuthResponse(), { accessToken: token, expiresIn });
+    const verifiedPassword = await this.passwordService.compare(password, user.password);
+    if (!verifiedPassword) throw new IncorrectEmailOrPasswordError();
+    const accessTokenData = this.authService.generateAccessToken({ userId: user.id });
+    const refreshTokenData = this.authService.generateRefreshToken({ userId: user.id });
+    return { accessTokenData, refreshTokenData };
   }
 }

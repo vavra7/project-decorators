@@ -11,7 +11,11 @@ import { ListingController, UserController } from './controllers';
 import { User } from './entities';
 import { apolloErrorHandler, expressErrorHandler } from './errors/handlers';
 import { authChecker as apolloAuthChecker } from './middlewares/apollo';
-import { authChecker as expressAuthChecker, bodyJsonParser } from './middlewares/express';
+import {
+  authChecker as expressAuthChecker,
+  bodyJsonParser,
+  cookieParser
+} from './middlewares/express';
 import { AuthResolver, UserResolver } from './resolvers';
 import { httpContextMiddleware } from './services';
 
@@ -38,6 +42,7 @@ class App {
   }
 
   private beforeRoutesInit(): void {
+    this.app.use(cookieParser);
     this.app.use(httpContextMiddleware);
   }
 

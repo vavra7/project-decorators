@@ -10,12 +10,16 @@ export class AuthResolver {
   private readonly handler: AuthHandler;
 
   @Mutation(() => LoginAuthResponse)
-  public loginAuth(
+  public async loginAuth(
     @Arg('email') email: string,
     @Arg('password') password: string,
     @Ctx() ctx: ResolverContext
   ): Promise<LoginAuthResponse> {
-    console.log('context', ctx.req.context);
-    return this.handler.loginAuth(email, password);
+    const { accessTokenData, refreshTokenData } = await this.handler.loginAuth(email, password);
+    ctx.res.cookie('refresh_token', refreshTokenData.token, { httpOnly: true });
+    return Object.assign(new LoginAuthResponse(), {
+      accessToken: accessTokenData.token,
+      expiresIn: accessTokenData.expiresIn
+    });
   }
 }

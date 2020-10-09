@@ -29,7 +29,7 @@ class App {
     const apolloServer = new ApolloServer({
       schema,
       formatError: apolloErrorHandler,
-      context: ctx => ctx
+      context: expressContext => expressContext
     });
     apolloServer.applyMiddleware({ app: this.app, cors: false });
     this.app.use(routes);

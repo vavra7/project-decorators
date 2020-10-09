@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "concurrently 'cd packages/express-decorators && yarn dev' 'cd packages/type-express && yarn dev' 'cd packages/server && yarn dev' 'cd packages/client && yarn dev'"
   },
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "concurrently": "^5.3.0"
   }
 }

@@ -1,7 +1,9 @@
 import { Inject } from 'typedi';
 import { User } from '../entities';
-import { IncorrectEmailOrPasswordError } from '../errors';
+import { IncorrectEmailOrPasswordError, NotAuthenticatedError } from '../errors';
+import { AccessTokenAuthResponse } from '../model';
 import { BcryptPasswordService, JwtAuthService } from '../services';
+import { RedisStoreService } from '../services/RedisStoreService';
 
 type AuthTokens = {
   accessTokenData: {
@@ -21,6 +23,9 @@ export class AuthHandler {
   @Inject()
   private readonly authService: JwtAuthService;
 
+  @Inject()
+  private readonly storeService: RedisStoreService;
+
   public async loginAuth(email: string, password: string): Promise<AuthTokens> {
     const user = await User.findOne({ where: { email } });
     if (!user) throw new IncorrectEmailOrPasswordError();
@@ -29,5 +34,24 @@ export class AuthHandler {
     const accessTokenData = this.authService.generateAccessToken({ userId: user.id });
     const refreshTokenData = this.authService.generateRefreshToken({ userId: user.id });
     return { accessTokenData, refreshTokenData };
+  }
+
+  public async refreshTokenAuth(refreshToken: string): Promise<AccessTokenAuthResponse> {
+    const bannedToken = await this.storeService.isTokenBanned(refreshToken);
+    if (bannedToken) throw new NotAuthenticatedError();
+    const tokenVerifyPayload = this.authService.verifyRefreshToken(refreshToken);
+    if (!tokenVerifyPayload) throw new NotAuthenticatedError();
+    const accessTokenData = this.authService.generateAccessToken({
+      userId: tokenVerifyPayload.userId
+    });
+    return Object.assign(new AccessTokenAuthResponse(), {
+      accessToken: accessTokenData.token,
+      expiresIn: accessTokenData.expiresIn
+    });
+  }
+
+  public logoutAuth(refreshToken?: string): true {
+    if (refreshToken) this.storeService.addToBanTokens(refreshToken);
+    return true;
   }
 }

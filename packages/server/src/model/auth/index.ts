@@ -1,1 +1,1 @@
-export * from './LoginAuthResponse';
+export * from './AccessTokenAuthResponse';

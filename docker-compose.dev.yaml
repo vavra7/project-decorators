@@ -23,7 +23,7 @@ services:
         source: redis-data
         target: /var/lib/redis
     ports:
-      - '6379:6397'
+      - '6379:6379'
   
 volumes:
   postgres-data:

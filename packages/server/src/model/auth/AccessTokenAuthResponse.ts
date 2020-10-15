@@ -1,7 +1,7 @@
 import { Field, Int, ObjectType } from 'type-graphql';
 
 @ObjectType()
-export class LoginAuthResponse {
+export class AccessTokenAuthResponse {
   @Field(() => String)
   public accessToken: string;
 

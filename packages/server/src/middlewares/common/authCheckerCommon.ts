@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { Container } from 'typedi';
 import { NotAuthenticatedError } from '../../errors';
-import { HttpContextService, JwtAuthService } from '../../services';
+import { JwtAuthService } from '../../services';
 
 export function authCheckerCommon(req: Request): never | true {
   const accessToken = req.get('Authorization')?.replace('Bearer ', '');
@@ -9,6 +9,6 @@ export function authCheckerCommon(req: Request): never | true {
   const authService = Container.get(JwtAuthService);
   const tokenVerifyPayload = authService.verifyAccessToken(accessToken);
   if (!tokenVerifyPayload) throw new NotAuthenticatedError();
-  Container.get(HttpContextService).set('userId', tokenVerifyPayload.userId);
+  req.context.userId = tokenVerifyPayload.userId;
   return true;
 }

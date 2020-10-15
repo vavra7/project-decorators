@@ -14,10 +14,10 @@ import { authChecker as apolloAuthChecker } from './middlewares/apollo';
 import {
   authChecker as expressAuthChecker,
   bodyJsonParser,
-  cookieParser
+  cookieParser,
+  createReqContext
 } from './middlewares/express';
 import { AuthResolver, UserResolver } from './resolvers';
-import { httpContextMiddleware } from './services';
 
 class App {
   private app: Application;
@@ -43,7 +43,7 @@ class App {
 
   private beforeRoutesInit(): void {
     this.app.use(cookieParser);
-    this.app.use(httpContextMiddleware);
+    this.app.use(createReqContext);
   }
 
   private afterRoutesInit(): void {

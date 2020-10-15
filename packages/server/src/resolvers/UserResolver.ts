@@ -1,8 +1,10 @@
-import { Arg, Authorized, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import { Inject } from 'typedi';
 import { User } from '../entities';
+import { NotAuthenticatedError } from '../errors';
 import { UserHandler } from '../handlers';
 import { RegisterUserInput } from '../model';
+import { ResolverContext } from '../types';
 
 @Resolver()
 export class UserResolver {
@@ -11,8 +13,10 @@ export class UserResolver {
 
   @Authorized()
   @Query(() => User)
-  public meUser(): Promise<User> {
-    return this.handler.getMeUser();
+  public meUser(@Ctx() ctx: ResolverContext): Promise<User> {
+    const userId = ctx.req.context.userId;
+    if (!userId) throw new NotAuthenticatedError();
+    return this.handler.meUser(userId);
   }
 
   @Mutation(() => User)

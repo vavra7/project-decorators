@@ -1,5 +1,5 @@
 import { ErrorCode } from '@project-decorators/shared';
-import { ErrorInterface } from './interfaces';
+import { ErrorInterface } from '../types';
 
 export class DataNotFoundError extends Error implements ErrorInterface {
   constructor(what?: string) {

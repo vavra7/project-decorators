@@ -1,7 +1,7 @@
 import { ErrorCode } from '@project-decorators/shared';
 import { ArgumentValidationError } from '@project-decorators/type-express';
 import { NextFunction, Request, Response } from 'express';
-import { ErrorResponse } from './types';
+import { ErrorResponse } from '../types';
 
 export function expressErrorHandler(
   err: Error,

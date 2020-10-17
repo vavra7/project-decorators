@@ -1,7 +1,7 @@
 import { ErrorCode } from '@project-decorators/shared';
 import { GraphQLError } from 'graphql';
 import { ArgumentValidationError } from 'type-graphql';
-import { FormattedError } from './types';
+import { FormattedError } from '../types';
 
 export function apolloErrorHandler(err: GraphQLError): FormattedError {
   let formattedError: FormattedError;

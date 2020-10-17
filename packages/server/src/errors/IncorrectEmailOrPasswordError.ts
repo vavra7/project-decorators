@@ -1,5 +1,5 @@
 import { ErrorCode } from '@project-decorators/shared';
-import { ErrorInterface } from './interfaces';
+import { ErrorInterface } from '../types';
 
 export class IncorrectEmailOrPasswordError extends Error implements ErrorInterface {
   constructor() {

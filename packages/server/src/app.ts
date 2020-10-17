@@ -10,15 +10,15 @@ import { Connection, createConnection, useContainer as typeormUseContainer } fro
 import { baseUrl, port } from './config';
 import { ListingController, UserController } from './controllers';
 import { User } from './entities';
-import { apolloErrorHandler, expressErrorHandler } from './errors/handlers';
-import { authChecker as apolloAuthChecker } from './middlewares/apollo';
 import {
-  authChecker as expressAuthChecker,
+  apolloAuthChecker,
   bodyJsonParser,
   cookieParser,
-  createReqContext
-} from './middlewares/express';
+  createReqContext,
+  expressAuthChecker
+} from './middlewares';
 import { AuthResolver, UserResolver } from './resolvers';
+import { apolloErrorHandler, expressErrorHandler } from './utils';
 
 class App {
   private app: Application;

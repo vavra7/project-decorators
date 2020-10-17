@@ -3,8 +3,3 @@ export type FormattedError = {
   code: string;
   extensions?: any;
 };
-
-export type ErrorResponse = {
-  errors: FormattedError[];
-  data?: null;
-};

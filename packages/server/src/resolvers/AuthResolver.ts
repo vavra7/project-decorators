@@ -2,7 +2,7 @@ import { Arg, Ctx, Mutation, Resolver } from 'type-graphql';
 import { Inject } from 'typedi';
 import { NotAuthenticatedError } from '../errors';
 import { AuthHandler } from '../handlers';
-import { AccessTokenAuthResponse } from '../model';
+import { AccessTokenAuthResponse } from '../models';
 import { ResolverContext } from '../types';
 
 @Resolver()

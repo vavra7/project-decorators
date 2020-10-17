@@ -3,7 +3,7 @@ import { Inject } from 'typedi';
 import { User } from '../entities';
 import { NotAuthenticatedError } from '../errors';
 import { UserHandler } from '../handlers';
-import { RegisterUserInput } from '../model';
+import { RegisterUserInput } from '../models';
 import { ResolverContext } from '../types';
 
 @Resolver()

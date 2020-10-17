@@ -2,7 +2,7 @@ import { Authorized, Body, Controller, Ctx, Get, Post } from '@project-decorator
 import { Inject } from 'typedi';
 import { User } from '../entities';
 import { UserHandler } from '../handlers';
-import { RegisterUserInput } from '../model';
+import { RegisterUserInput } from '../models';
 
 @Controller('/user')
 export class UserController {

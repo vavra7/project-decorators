@@ -1,9 +1,9 @@
 import { Inject } from 'typedi';
-import { User } from '../entities';
+import { InjectRepository } from 'typeorm-typedi-extensions';
 import { IncorrectEmailOrPasswordError, NotAuthenticatedError } from '../errors';
-import { AccessTokenAuthResponse } from '../model';
+import { AccessTokenAuthResponse } from '../models';
+import { BanTokensRepository, UserRepository } from '../repositories';
 import { BcryptPasswordService, JwtAuthService } from '../services';
-import { RedisStoreService } from '../services/RedisStoreService';
 
 type AuthTokens = {
   accessTokenData: {
@@ -24,10 +24,13 @@ export class AuthHandler {
   private readonly authService: JwtAuthService;
 
   @Inject()
-  private readonly storeService: RedisStoreService;
+  private readonly banTokensRepository: BanTokensRepository;
+
+  @InjectRepository()
+  private readonly userRepository: UserRepository;
 
   public async loginAuth(email: string, password: string): Promise<AuthTokens> {
-    const user = await User.findOne({ where: { email } });
+    const user = await this.userRepository.findByEmail(email);
     if (!user) throw new IncorrectEmailOrPasswordError();
     const verifiedPassword = await this.passwordService.compare(password, user.password);
     if (!verifiedPassword) throw new IncorrectEmailOrPasswordError();
@@ -37,8 +40,8 @@ export class AuthHandler {
   }
 
   public async refreshTokenAuth(refreshToken: string): Promise<AccessTokenAuthResponse> {
-    const bannedToken = await this.storeService.isTokenBanned(refreshToken);
-    if (bannedToken) throw new NotAuthenticatedError();
+    const isBanned = await this.banTokensRepository.isBanned(refreshToken);
+    if (isBanned) throw new NotAuthenticatedError();
     const tokenVerifyPayload = this.authService.verifyRefreshToken(refreshToken);
     if (!tokenVerifyPayload) throw new NotAuthenticatedError();
     const accessTokenData = this.authService.generateAccessToken({
@@ -51,7 +54,7 @@ export class AuthHandler {
   }
 
   public logoutAuth(refreshToken?: string): true {
-    if (refreshToken) this.storeService.addToBanTokens(refreshToken);
+    if (refreshToken) this.banTokensRepository.add(refreshToken);
     return true;
   }
 }

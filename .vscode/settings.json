@@ -11,6 +11,8 @@
     "paramtypes",
     "postgres",
     "respawn",
+    "sadd",
+    "sismember",
     "src",
     "ts",
     "ts node dev no notify respawn src app",

@@ -1,11 +1,12 @@
 import { buildRoutes } from '@project-decorators/type-express';
 import { ApolloServer } from 'apollo-server-express';
+import { useContainer as classValidatorUseContainer } from 'class-validator';
 import express, { Application, Router } from 'express';
 import { GraphQLSchema } from 'graphql';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
 import { Container } from 'typedi';
-import { Connection, createConnection } from 'typeorm';
+import { Connection, createConnection, useContainer as typeormUseContainer } from 'typeorm';
 import { baseUrl, port } from './config';
 import { ListingController, UserController } from './controllers';
 import { User } from './entities';
@@ -27,7 +28,8 @@ class App {
   }
 
   public async start(): Promise<void> {
-    this.createDbConnection();
+    classValidatorUseContainer(Container);
+    await this.createDbConnection();
     this.beforeRoutesInit();
     const [schema, routes] = await Promise.all([this.buildGqlSchema(), this.buildRestRoutes()]);
     const apolloServer = new ApolloServer({
@@ -51,6 +53,7 @@ class App {
   }
 
   private createDbConnection(): Promise<void | Connection> {
+    typeormUseContainer(Container);
     return createConnection({
       type: 'postgres',
       host: 'localhost',

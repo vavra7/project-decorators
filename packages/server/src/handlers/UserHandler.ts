@@ -18,13 +18,13 @@ export class UserHandler {
     return 'This is an user';
   }
 
-  public async meUser(userId: User['id']): Promise<User> {
+  public async me(userId: User['id']): Promise<User> {
     const user = await this.userRepository.findById(userId);
     if (!user) throw new DataNotFoundError('User');
     return user;
   }
 
-  public async registerUser(registerUserInput: RegisterUserInput): Promise<User> {
+  public async register(registerUserInput: RegisterUserInput): Promise<User> {
     registerUserInput.password = await this.passwordService.hash(registerUserInput.password);
     return this.userRepository.create(registerUserInput);
   }

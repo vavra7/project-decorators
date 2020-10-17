@@ -12,18 +12,18 @@ export class UserResolver {
   private readonly handler: UserHandler;
 
   @Authorized()
-  @Query(() => User)
-  public meUser(@Ctx() ctx: ResolverContext): Promise<User> {
+  @Query(() => User, { name: 'meUser' })
+  public me(@Ctx() ctx: ResolverContext): Promise<User> {
     const userId = ctx.req.context.userId;
     if (!userId) throw new NotAuthenticatedError();
-    return this.handler.meUser(userId);
+    return this.handler.me(userId);
   }
 
-  @Mutation(() => User)
-  public registerUser(
+  @Mutation(() => User, { name: 'registerUser' })
+  public register(
     @Arg('data')
     data: RegisterUserInput
   ): Promise<User> {
-    return this.handler.registerUser(data);
+    return this.handler.register(data);
   }
 }

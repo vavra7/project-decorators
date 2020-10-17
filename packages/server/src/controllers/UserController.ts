@@ -18,6 +18,6 @@ export class UserController {
 
   @Post('/')
   public registerUser(@Body() registerUserInput: RegisterUserInput): Promise<User> {
-    return this.handler.registerUser(registerUserInput);
+    return this.handler.register(registerUserInput);
   }
 }

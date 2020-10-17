@@ -29,7 +29,7 @@ export class AuthHandler {
   @InjectRepository()
   private readonly userRepository: UserRepository;
 
-  public async loginAuth(email: string, password: string): Promise<AuthTokens> {
+  public async login(email: string, password: string): Promise<AuthTokens> {
     const user = await this.userRepository.findByEmail(email);
     if (!user) throw new IncorrectEmailOrPasswordError();
     const verifiedPassword = await this.passwordService.compare(password, user.password);
@@ -39,7 +39,7 @@ export class AuthHandler {
     return { accessTokenData, refreshTokenData };
   }
 
-  public async refreshTokenAuth(refreshToken: string): Promise<AccessTokenAuthResponse> {
+  public async refreshToken(refreshToken: string): Promise<AccessTokenAuthResponse> {
     const isBanned = await this.banTokensRepository.isBanned(refreshToken);
     if (isBanned) throw new NotAuthenticatedError();
     const tokenVerifyPayload = this.authService.verifyRefreshToken(refreshToken);
@@ -53,7 +53,7 @@ export class AuthHandler {
     });
   }
 
-  public logoutAuth(refreshToken?: string): true {
+  public logout(refreshToken?: string): true {
     if (refreshToken) this.banTokensRepository.add(refreshToken);
     return true;
   }

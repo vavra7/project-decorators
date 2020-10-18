@@ -14,6 +14,7 @@ import {
   apolloAuthChecker,
   bodyJsonParser,
   cookieParser,
+  cors,
   createReqContext,
   expressAuthChecker
 } from './middlewares';
@@ -44,6 +45,7 @@ class App {
   }
 
   private beforeRoutesInit(): void {
+    this.app.use(cors);
     this.app.use(cookieParser);
     this.app.use(createReqContext);
   }

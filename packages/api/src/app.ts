@@ -41,7 +41,7 @@ class App {
     this.app.use(routes);
     apolloServer.applyMiddleware({ app: this.app, cors: false });
     this.afterRoutesInit();
-    this.app.listen(port, () => console.log(`ready - started server on ${baseUrl}`));
+    this.app.listen(port, () => console.log(`ready - started api server on ${baseUrl}`));
   }
 
   private beforeRoutesInit(): void {

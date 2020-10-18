@@ -1,29 +1,15 @@
+import { routes } from '@project-decorators/shared';
+import Link from 'next/link';
 import { Component, ReactElement } from 'react';
+import { BindThis } from '../utils';
 
 interface State {
   number: number;
 }
 
-function BindThis(): MethodDecorator {
-  return (target, propertyKey, descriptor) => {
-    if (!descriptor || typeof descriptor.value !== 'function') {
-      throw new TypeError(
-        `Only methods can be decorated with @BindThis(). <${propertyKey.toString()}> is not a method.`
-      );
-    }
-
-    return {
-      get(this) {
-        return (descriptor.value as any).bind(this);
-      }
-    };
-  };
-}
-
 class Index extends Component<{}, State> {
   constructor(props: any) {
     super(props);
-
     this.state = {
       number: 0
     };
@@ -44,10 +30,17 @@ class Index extends Component<{}, State> {
         <button onClick={this.handleClick} type="button">
           button
         </button>
-
         <button onClick={this.handleClick2} type="button">
           button2
         </button>
+        <br />
+        <Link href={{ pathname: routes.login.en }}>
+          <a>EN LOGIN</a>
+        </Link>
+        <br />
+        <Link href={{ pathname: routes.login.cs }}>
+          <a>CZ LOGIN</a>
+        </Link>
       </div>
     );
   }

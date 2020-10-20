@@ -1,14 +1,19 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const express = require('express');
 const next = require('next');
+const express = require('express');
+const { generateRoutes } = require('@project-decorators/router-next-express');
+const { routesDefinition } = require('@project-decorators/shared');
 
 const port = 3000;
 const baseUrl = `http://localhost:${port}`;
-const dev = process.env.NODE_ENV !== 'production';
-const server = next({ dev });
+const nextApp = next({ dev: process.env.NODE_ENV !== 'production' });
 
-server.prepare().then(() => {
+nextApp.prepare().then(() => {
   const expressApp = express();
-
-  expressApp.listen(port, () => console.log(`ready - started client server on ${baseUrl}`));
+  generateRoutes({
+    nextApp,
+    expressApp,
+    routesDefinition
+  });
+  expressApp.listen(3000, () => console.log(`ready - started client server on ${baseUrl}`));
 });

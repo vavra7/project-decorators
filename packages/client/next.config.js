@@ -1,5 +1,3 @@
-const nextConfig = {
+module.exports = {
   distDir: 'dist'
 };
-
-module.exports = nextConfig;

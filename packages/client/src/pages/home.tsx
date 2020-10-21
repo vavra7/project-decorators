@@ -1,3 +1,4 @@
+import { Route } from '@project-decorators/shared';
 import { Component, ReactElement } from 'react';
 import { BindThis, router } from '../utils';
 
@@ -16,13 +17,21 @@ class Index extends Component<{}, State> {
   @BindThis()
   private handleClick(): void {
     console.log(this.state.number);
-    router.push('/login');
+    router.push(Route.Login);
+  }
+
+  private handleClick2(): void {
+    router.push(Route.ConfirmEmail, { token: 'aaaaaaaaaaaa', bubu: 'eeeeeeeeeeee' });
   }
 
   public render(): ReactElement {
     return (
       <div>
         <button onClick={this.handleClick} type="button">
+          button
+        </button>
+        <br />
+        <button onClick={this.handleClick2} type="button">
           button
         </button>
         <br />

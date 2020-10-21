@@ -13,7 +13,7 @@ const test = gql`
 const login: NextPage = () => {
   const { loading, error, data } = useQuery(test);
   const onClick = (): void => {
-    router.push('/home');
+    router.push('home');
   };
   return (
     <>

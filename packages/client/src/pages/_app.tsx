@@ -5,18 +5,6 @@ import { ReactElement } from 'react';
 import { apolloClient } from '../utils';
 
 class CustomApp extends App {
-  // public static async getInitialProps(context: any) {
-  //   const isServer: boolean = typeof window === 'undefined';
-  //   if (isServer && context.ctx.res.context) {
-  //     console.log(context.ctx.res.context.name);
-  //     context.ctx.res.writeHead(303, { Location: '/login' });
-  //     context.ctx.res?.end();
-  //   }
-  //   // console.log(context.ctx.res.context);
-  //   const appProps = await App.getInitialProps(context);
-  //   return { ...appProps };
-  // }
-
   public render(): ReactElement {
     const { Component, pageProps } = this.props;
     return (

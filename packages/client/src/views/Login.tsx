@@ -1,6 +1,8 @@
 import { gql, useQuery } from '@apollo/client';
+import { Route } from '@project-decorators/shared';
 import { NextPage } from 'next';
-import { router } from '../utils';
+import { Link } from '../components/commons';
+import { i18n, router } from '../utils';
 
 const test = gql`
   query GetRates {
@@ -18,10 +20,10 @@ const login: NextPage = () => {
   return (
     <>
       <h1>Login</h1>
-      <br />
-      <button onClick={onClick} type="button">
-        test
-      </button>
+      <div>{i18n.locale}</div>
+      <Link to={Route.Home}>
+        <button type="button">to locale home</button>
+      </Link>
       <br />
       <pre>{JSON.stringify(loading, null, 4)}</pre>
       <pre>{JSON.stringify(error, null, 4)}</pre>

@@ -9,7 +9,7 @@ const ConfirmEmail: NextPage = (props: any) => {
   console.log(i18n.locale);
   return (
     <>
-      <div>{t()}</div>
+      <div>{t('adsf')}</div>
       <div>{i18n.locale}</div>
       <Link to={Route.Home}>
         <button type="button">to locale home</button>

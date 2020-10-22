@@ -2,7 +2,7 @@ import { Language, Route } from '@project-decorators/shared';
 import { SingletonRouter, withRouter } from 'next/router';
 import { Component, ReactElement } from 'react';
 import { Link } from '../components/commons';
-import { BindThis, i18n } from '../utils';
+import { BindThis, i18n, t } from '../utils';
 
 interface State {
   number: number;
@@ -30,6 +30,7 @@ class Index extends Component<SingletonRouter, State> {
   public render(): ReactElement {
     return (
       <div>
+        <h1>{t('asdfas')}</h1>
         <div>{i18n.locale}</div>
         <Link locale={Language.En} to={Route.Home}>
           <button type="button">to en home</button>

@@ -2,7 +2,7 @@ import { gql, useQuery } from '@apollo/client';
 import { Route } from '@project-decorators/shared';
 import { NextPage } from 'next';
 import { Link } from '../components/commons';
-import { i18n, router } from '../utils';
+import { i18n, t } from '../utils';
 
 const test = gql`
   query GetRates {
@@ -12,14 +12,11 @@ const test = gql`
   }
 `;
 
-const login: NextPage = () => {
+const Login: NextPage = () => {
   const { loading, error, data } = useQuery(test);
-  const onClick = (): void => {
-    router.push('home');
-  };
   return (
     <>
-      <h1>Login</h1>
+      <h1>{t('views.login.title')}</h1>
       <div>{i18n.locale}</div>
       <Link to={Route.Home}>
         <button type="button">to locale home</button>
@@ -32,4 +29,4 @@ const login: NextPage = () => {
   );
 };
 
-export default login;
+export default Login;

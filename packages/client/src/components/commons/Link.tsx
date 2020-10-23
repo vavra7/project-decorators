@@ -1,6 +1,7 @@
-import { Language, Route, routesDefinition } from '@project-decorators/shared';
+import { routesDefinition } from '@project-decorators/shared';
 import { useRouter } from 'next/router';
 import { FC, ReactNode } from 'react';
+import { Language, Route } from '../../enums';
 import { i18n } from '../../utils';
 
 interface Props {

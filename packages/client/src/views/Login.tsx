@@ -1,7 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
-import { Route } from '@project-decorators/shared';
 import { NextPage } from 'next';
 import { Link } from '../components/commons';
+import { Route } from '../enums';
 import { i18n, t } from '../utils';
 
 const test = gql`

@@ -1,14 +1,14 @@
-import { Language, Route } from '@project-decorators/shared';
 import { SingletonRouter, withRouter } from 'next/router';
 import { Component, ReactElement } from 'react';
 import { Link } from '../components/commons';
-import { BindThis, i18n, t } from '../utils';
+import { Language, Route } from '../enums';
+import { i18n, t } from '../utils';
 
 interface State {
   number: number;
 }
 
-class Index extends Component<SingletonRouter, State> {
+class Home extends Component<SingletonRouter, State> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -16,21 +16,10 @@ class Index extends Component<SingletonRouter, State> {
     };
   }
 
-  @BindThis()
-  private handleClick(): void {
-    console.log(this.state.number);
-    this.props.router?.push('/en');
-  }
-
-  @BindThis()
-  private handleClick2(): void {
-    this.props.router?.push('/');
-  }
-
   public render(): ReactElement {
     return (
       <div>
-        <h1>{t('asdfas')}</h1>
+        <h1>{t('views.home.title')}</h1>
         <div>{i18n.locale}</div>
         <Link locale={Language.En} to={Route.Home}>
           <button type="button">to en home</button>
@@ -53,4 +42,4 @@ class Index extends Component<SingletonRouter, State> {
   }
 }
 
-export default withRouter(Index as any);
+export default withRouter(Home as any);

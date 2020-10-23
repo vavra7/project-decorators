@@ -1,7 +1,7 @@
-import { Route } from '@project-decorators/shared';
 import { NextPage } from 'next';
 import { useRouter, withRouter } from 'next/router';
 import { Link } from '../components/commons';
+import { Route } from '../enums';
 import { i18n, t } from '../utils';
 
 const ConfirmEmail: NextPage = (props: any) => {

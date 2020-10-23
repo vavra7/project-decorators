@@ -1,4 +1,4 @@
-import { Language } from '@project-decorators/shared';
+import { Language } from '../enums';
 import translations from '../translations';
 import { BindThis } from './BindThis';
 
@@ -19,9 +19,10 @@ class I18n<T extends string> {
   @BindThis()
   public t(path: string): string {
     const keysArray = path.split('.');
-    const translation = keysArray.reduce((object, key) => {
-      return object[key];
-    }, this.translations[this.locale]);
+    const translation = keysArray.reduce(
+      (object, key) => (object && object[key]) || null,
+      this.translations[this.locale]
+    );
     if (!translation) {
       console.warn('Did not find "%s" translation for path: "%s".', this.locale, path);
       return path;

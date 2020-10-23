@@ -1,4 +1,4 @@
-import { Language } from '@project-decorators/shared';
+import { Language } from '../../enums';
 import { i18n } from '../../utils';
 import Home from '../../views/Home';
 

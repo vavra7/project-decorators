@@ -6,11 +6,11 @@ import { i18n, t } from '../utils';
 
 const ConfirmEmail: NextPage = (props: any) => {
   const { query } = useRouter();
-  console.log(i18n.locale);
+  console.log(i18n.lang);
   return (
     <>
       <div>{t('adsf')}</div>
-      <div>{i18n.locale}</div>
+      <div>{i18n.lang}</div>
       <Link to={Route.Home}>
         <button type="button">to locale home</button>
       </Link>

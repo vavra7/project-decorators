@@ -17,7 +17,7 @@ const Login: NextPage = () => {
   return (
     <>
       <h1>{t('views.login.title')}</h1>
-      <div>{i18n.locale}</div>
+      <div>{i18n.lang}</div>
       <Link to={Route.Home}>
         <button type="button">to locale home</button>
       </Link>

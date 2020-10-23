@@ -16,8 +16,8 @@ export const Link: FC<Props> = props => {
   const router = useRouter();
   const routeDefinitionItem = routesDefinition.find(item => item.name === to)!;
   const handleClick = (): void => {
-    router.push({ pathname: routeDefinitionItem.pathname[locale || i18n.locale], query: query });
-    if (locale && locale !== i18n.locale) i18n.locale = locale;
+    router.push({ pathname: routeDefinitionItem.pathname[locale || i18n.lang], query: query });
+    if (locale && locale !== i18n.lang) i18n.lang = locale;
   };
   return <a onClick={handleClick}>{children}</a>;
 };

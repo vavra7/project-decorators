@@ -20,7 +20,7 @@ class Home extends Component<SingletonRouter, State> {
     return (
       <div>
         <h1>{t('views.home.title')}</h1>
-        <div>{i18n.locale}</div>
+        <div>{i18n.lang}</div>
         <Link locale={Language.En} to={Route.Home}>
           <button type="button">to en home</button>
         </Link>

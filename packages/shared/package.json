@@ -8,9 +8,7 @@
     "build": "tsc",
     "lint": "eslint 'src/**/*.{js,ts}'"
   },
-  "dependencies": {
-    "@project-decorators/router-next-express": "1.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.1.1",
     "@typescript-eslint/parser": "^4.1.1",

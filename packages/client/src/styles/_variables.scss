@@ -1,0 +1,45 @@
+$base-size: 15px;
+
+// grid system
+$xs: 0px;
+$sm: 600px;
+$md: 960px;
+$lg: 1210px;
+$xl: 1500px;
+
+$sm-content-width: $sm - 40;
+$md-content-width: $md - 50;
+$lg-content-width: $lg - 60;
+$xl-content-width: $xl - 70;
+
+$breakpoints-min: (
+  'xs': $xs,
+  'sm': $sm,
+  'md': $md,
+  'lg': $lg,
+  'xl': $xl
+);
+
+$breakpoints-max: (
+  'xs': $sm - 1,
+  'sm': $md - 1,
+  'md': $lg - 1,
+  'lg': $xl - 1,
+  'xl': 99999px
+);
+
+// spacing
+$spaces: (
+  0: $base-size * 0,
+  1: $base-size * 0.25,
+  2: $base-size * 0.5,
+  3: $base-size * 1,
+  4: $base-size * 1.5,
+  5: $base-size * 3
+);
+
+// colors
+$primary: #418fbc;
+$success: #41bc9c;
+$info: #f7b84b;
+$error: #f1556c;

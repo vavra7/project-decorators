@@ -1,23 +1,35 @@
-import { routesDefinition } from '@project-decorators/shared';
 import { useRouter } from 'next/router';
-import { FC, ReactNode } from 'react';
+import { FC, MouseEvent, ReactNode } from 'react';
 import { Language, Route } from '../../enums';
-import { i18n } from '../../utils';
+import { i18n, routesDefinition } from '../../utils';
 
 interface Props {
   children: ReactNode;
   to: Route;
   query?: { [key: string]: string };
-  locale?: Language;
+  lang?: Language;
+  className?: string;
 }
 
 export const Link: FC<Props> = props => {
-  const { children, to, query, locale } = props;
+  const { children, to, query, lang, className } = props;
   const router = useRouter();
   const routeDefinitionItem = routesDefinition.find(item => item.name === to)!;
-  const handleClick = (): void => {
-    router.push({ pathname: routeDefinitionItem.pathname[locale || i18n.lang], query: query });
-    if (locale && locale !== i18n.lang) i18n.lang = locale;
+  const pathname = routeDefinitionItem.pathname[lang || i18n.lang];
+  let href = pathname;
+  if (query) {
+    for (const key in query) {
+      href = href.replace(`[${key}]`, query[key]);
+    }
+  }
+  const handleClick = (e: MouseEvent<HTMLAnchorElement>): void => {
+    e.preventDefault();
+    router.push({ pathname, query: query });
+    if (lang && lang !== i18n.lang) i18n.lang = lang;
   };
-  return <a onClick={handleClick}>{children}</a>;
+  return (
+    <a className={className} href={href} onClick={handleClick}>
+      {children}
+    </a>
+  );
 };

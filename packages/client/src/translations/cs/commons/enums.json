@@ -1,0 +1,7 @@
+{
+  "route": {
+    "home": "Domů",
+    "login": "Přihlásit se",
+    "confirmEmail": "Potvrdit email"
+  }
+}

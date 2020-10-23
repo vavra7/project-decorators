@@ -1,22 +1,18 @@
 import { NextPage } from 'next';
-import { useRouter, withRouter } from 'next/router';
 import { Link } from '../components/commons';
+import Layout1 from '../components/layouts/Layout1';
 import { Route } from '../enums';
-import { i18n, t } from '../utils';
+import { i18n } from '../utils';
 
-const ConfirmEmail: NextPage = (props: any) => {
-  const { query } = useRouter();
-  console.log(i18n.lang);
+const ConfirmEmail: NextPage = () => {
   return (
-    <>
-      <div>{t('adsf')}</div>
+    <Layout1>
       <div>{i18n.lang}</div>
       <Link to={Route.Home}>
         <button type="button">to locale home</button>
       </Link>
-      <pre>{JSON.stringify(query, null, 4)}</pre>
-    </>
+    </Layout1>
   );
 };
 
-export default withRouter(ConfirmEmail);
+export default ConfirmEmail;

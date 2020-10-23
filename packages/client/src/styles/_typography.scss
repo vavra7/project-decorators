@@ -1,0 +1,28 @@
+@import './variables';
+
+$primary-font: 'Roboto', 'Arial';
+$secondary-font: 'Cinzel', 'Arial';
+
+* {
+	font-family: $primary-font;
+	font-weight: 300;
+}
+
+h1,
+h2,
+h3,
+h4 {
+	font-family: $secondary-font;
+}
+
+a {
+	color: $primary;
+}
+
+$font-weight-list: (bolder, bold);
+
+@each $option in $font-weight-list {
+	.fw-#{$option} {
+		font-weight: $option;
+	}
+}

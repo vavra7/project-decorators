@@ -1,6 +1,7 @@
 import { SingletonRouter, withRouter } from 'next/router';
 import { Component, ReactElement } from 'react';
 import { Link } from '../components/commons';
+import Layout1 from '../components/layouts/Layout1';
 import { Language, Route } from '../enums';
 import { i18n, t } from '../utils';
 
@@ -18,14 +19,14 @@ class Home extends Component<SingletonRouter, State> {
 
   public render(): ReactElement {
     return (
-      <div>
+      <Layout1>
         <h1>{t('views.home.title')}</h1>
         <div>{i18n.lang}</div>
-        <Link locale={Language.En} to={Route.Home}>
+        <Link lang={Language.En} to={Route.Home}>
           <button type="button">to en home</button>
         </Link>
         <br />
-        <Link locale={Language.Cs} to={Route.Home}>
+        <Link lang={Language.Cs} to={Route.Home}>
           <button type="button">to cz home</button>
         </Link>
         <br />
@@ -37,7 +38,7 @@ class Home extends Component<SingletonRouter, State> {
           <button type="button">to locale confirm</button>
         </Link>
         <br />
-      </div>
+      </Layout1>
     );
   }
 }

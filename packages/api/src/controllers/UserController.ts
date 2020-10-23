@@ -12,7 +12,6 @@ export class UserController {
   @Get('/')
   @Authorized()
   public getUser(@Ctx() ctx: any): string {
-    console.log('ctx', ctx.req);
     return this.handler.getUser();
   }
 

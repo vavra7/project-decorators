@@ -1,3 +1,10 @@
-body {
-  background: rgb(252, 252, 252);
+@import './gridSystem';
+@import './typography';
+@import './spacing';
+@import './positioning';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }

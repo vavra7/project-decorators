@@ -4,4 +4,4 @@ dev:
 		"cd packages/type-express && yarn dev" \
 		"cd packages/shared && yarn dev" \
 		"cd packages/api && yarn dev" \
-		# "cd packages/client && yarn dev"
+		"cd packages/client && yarn dev"

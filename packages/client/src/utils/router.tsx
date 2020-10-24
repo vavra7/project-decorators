@@ -7,8 +7,8 @@ import { I18n, i18n } from './i18n';
 
 type RouterToFce = (to: Route, query?: ParsedUrlQuery, lang?: Language) => void;
 
-export interface WithRouterProps {
-  router: SingletonRouter & { to: RouterToFce };
+export interface InjectedRouter {
+  router?: SingletonRouter & { to: RouterToFce };
 }
 
 export const routesDefinition = _routesDefinition;
@@ -45,7 +45,7 @@ export function useRouter(): NextRouter & { to: RouterToFce } {
  * Decorator of native Next.js 'WithRouter' extended by 'to' function
  */
 export function WithRouter(): any {
-  return (WrappedTarget: ComponentType<WithRouterProps>) => {
+  return (WrappedTarget: ComponentType<InjectedRouter>) => {
     const WithRouterComponent = class extends Component<SingletonRouter> {
       public render(): ReactNode {
         const { router, ...restProps } = this.props;

@@ -26,5 +26,12 @@ export const routesDefinition: RoutesDefinition<Route, Language> = [
       cs: '/potvrdit-email/[token]',
       en: '/en/confirm-email/[token]'
     }
+  },
+  {
+    name: Route.UserProfile,
+    pathname: {
+      cs: '/muj-ucet',
+      en: '/en/profile'
+    }
   }
 ];

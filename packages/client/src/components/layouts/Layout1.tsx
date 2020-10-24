@@ -20,6 +20,7 @@ const Layout1: FC<Props> = ({ children }) => {
       >
         <div>{i18n.lang}</div>
         <Link to={Route.Home}>{t(`commons.enums.route.${Route.Home}`)}</Link>
+        <Link to={Route.UserProfile}>{t(`commons.enums.route.${Route.UserProfile}`)}</Link>
         <Link to={Route.Login}>{t(`commons.enums.route.${Route.Login}`)}</Link>
         <Link query={{ token: 'some-token-here' }} to={Route.ConfirmEmail}>
           {t(`commons.enums.route.${Route.ConfirmEmail}`)}

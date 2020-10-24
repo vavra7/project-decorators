@@ -2,6 +2,7 @@
   "route": {
     "home": "Domů",
     "login": "Přihlásit se",
-    "confirmEmail": "Potvrdit email"
+    "confirmEmail": "Potvrdit email",
+    "userProfile": "Můj účet"
   }
 }

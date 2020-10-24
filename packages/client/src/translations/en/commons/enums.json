@@ -1,0 +1,8 @@
+{
+  "route": {
+    "home": "Home",
+    "login": "Login",
+    "confirmEmail": "Confirm Email",
+    "userProfile": "Profile"
+  }
+}

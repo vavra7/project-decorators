@@ -1,5 +1,6 @@
 export enum Route {
   Home = 'home',
   Login = 'login',
-  ConfirmEmail = 'confirmEmail'
+  ConfirmEmail = 'confirmEmail',
+  UserProfile = 'userProfile'
 }

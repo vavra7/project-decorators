@@ -7,7 +7,7 @@ interface I18nOptions<T extends string> {
   translations: object;
 }
 
-class I18n<T extends string> {
+export class I18n<T extends string> {
   public lang: T;
   private translations: any;
 

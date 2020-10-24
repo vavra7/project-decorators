@@ -5,10 +5,15 @@ export function BindThis(): MethodDecorator {
         `Only methods can be decorated with @BindThis(). <${propertyKey.toString()}> is not a method.`
       );
     }
-
     return {
       get(this) {
-        return (descriptor.value as any).bind(this);
+        const bound = (descriptor.value as any).bind(this);
+        Object.defineProperty(this, propertyKey, {
+          value: bound,
+          configurable: true,
+          writable: true
+        });
+        return bound;
       }
     };
   };

@@ -1,36 +1,37 @@
-import { SingletonRouter, withRouter } from 'next/router';
-import { FC } from 'react';
-import { Language } from '../../../enums';
-import { i18n, routesDefinition } from '../../../utils';
-import { Link } from '../Link';
+import { PureComponent, ReactElement } from 'react';
+import { Link } from '../';
+import { Language, Route } from '../../../enums';
+import { i18n, routesDefinition, WithRouter, WithRouterProps } from '../../../utils';
 
-interface Props {
-  router: SingletonRouter;
+@WithRouter()
+class LangSwitch extends PureComponent<WithRouterProps> {
+  private getCurrentRouteName(): Route | undefined {
+    return routesDefinition.find(route => route.pathname[i18n.lang] === this.props.router.pathname)
+      ?.name;
+  }
+
+  public render(): ReactElement {
+    const routeName = this.getCurrentRouteName();
+    if (routeName) {
+      return (
+        <div>
+          {Object.values(Language).map(lang => (
+            <Link
+              className="ml-1"
+              key={lang}
+              lang={lang}
+              query={this.props.router.query}
+              to={routeName}
+            >
+              {lang}
+            </Link>
+          ))}
+        </div>
+      );
+    } else {
+      return <></>;
+    }
+  }
 }
 
-const LangSwitch: FC<Props> = props => {
-  const routeName = routesDefinition.find(
-    route => route.pathname[i18n.lang] === props.router.pathname
-  )?.name;
-  if (!routeName) {
-    return <></>;
-  } else {
-    return (
-      <div>
-        {Object.values(Language).map(lang => (
-          <Link
-            className="ml-1"
-            key={lang}
-            lang={lang}
-            query={props.router.query as any}
-            to={routeName}
-          >
-            {lang}
-          </Link>
-        ))}
-      </div>
-    );
-  }
-};
-
-export default withRouter(LangSwitch);
+export default LangSwitch;

@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { ParsedUrlQuery } from 'querystring';
 import { FC, MouseEvent, ReactNode } from 'react';
 import { Language, Route } from '../../enums';
 import { i18n, routesDefinition } from '../../utils';
@@ -6,7 +7,7 @@ import { i18n, routesDefinition } from '../../utils';
 interface Props {
   children: ReactNode;
   to: Route;
-  query?: { [key: string]: string };
+  query?: ParsedUrlQuery;
   lang?: Language;
   className?: string;
 }
@@ -18,8 +19,9 @@ export const Link: FC<Props> = props => {
   const pathname = routeDefinitionItem.pathname[lang || i18n.lang];
   let href = pathname;
   if (query) {
-    for (const key in query) {
-      href = href.replace(`[${key}]`, query[key]);
+    let key: keyof ParsedUrlQuery;
+    for (key in query) {
+      href = href.replace(`[${key}]`, query[key]!.toString());
     }
   }
   const handleClick = (e: MouseEvent<HTMLAnchorElement>): void => {

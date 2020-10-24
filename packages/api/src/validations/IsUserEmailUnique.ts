@@ -29,7 +29,7 @@ class IsUserEmailUniqueConstraint implements ValidatorConstraintInterface {
 export function IsUserEmailUnique(validationOptions?: ValidationOptions): PropertyDecorator {
   return (target, propertyKey): void => {
     if (typeof propertyKey === 'symbol') {
-      throw new Error('Validating of symbols is not supported');
+      throw new Error('Symbol validation is not supported');
     }
     registerDecorator({
       target: target.constructor,

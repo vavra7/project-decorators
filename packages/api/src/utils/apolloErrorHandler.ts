@@ -16,7 +16,7 @@ export function apolloErrorHandler(err: GraphQLError): FormattedError {
     };
   } else {
     const code =
-      typeof (err.originalError as any).getCode === 'function'
+      typeof (err.originalError as any)?.getCode === 'function'
         ? (err.originalError as any).getCode()
         : ErrorCode.InternalServerError;
     const extensions = err.extensions?.exception;

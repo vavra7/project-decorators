@@ -1,5 +1,6 @@
 import { IsEmail, Length } from 'class-validator';
 import { Field, InputType } from 'type-graphql';
+import { GqlLanguage, Language } from '../enums';
 import { IsUserEmailUnique } from '../validations';
 
 @InputType()
@@ -21,4 +22,7 @@ export class RegisterUserInput {
   @Length(5, 100)
   @Field(() => String)
   public password: string;
+
+  @Field(() => GqlLanguage, { nullable: true })
+  public language: Language;
 }

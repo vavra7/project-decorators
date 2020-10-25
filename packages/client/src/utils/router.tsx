@@ -18,10 +18,6 @@ export const routesDefinition = _routesDefinition;
  * Function 'to' provides easier navigation.
  */
 const getRouterToFce = (pushFce: NextRouter['push'], _i18n: I18n<Language>): RouterToFce => {
-  /**
-   * Redirects to route by passing route name only.
-   * New route takes into account the current language.
-   */
   return function to(to: Route, query?: ParsedUrlQuery, lang?: Language): void {
     const routeDefinitionItem = routesDefinition.find(item => item.name === to)!;
     const pathname = routeDefinitionItem.pathname[lang || i18n.lang];

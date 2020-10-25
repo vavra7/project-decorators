@@ -10,7 +10,7 @@ import { UserRepository } from '../repositories';
 @ValidatorConstraint({ async: true })
 class IsUserEmailUniqueConstraint implements ValidatorConstraintInterface {
   @InjectRepository()
-  public userRepository: UserRepository;
+  private readonly userRepository: UserRepository;
 
   public async validate(email: string): Promise<boolean> {
     const user = await this.userRepository.findByEmail(email);

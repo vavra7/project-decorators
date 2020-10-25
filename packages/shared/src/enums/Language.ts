@@ -4,6 +4,6 @@ export enum Language {
 }
 
 export enum GqlLanguage {
-  cs,
-  en
+  cs = 'cs',
+  en = 'en'
 }

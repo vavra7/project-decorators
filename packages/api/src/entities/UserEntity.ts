@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm';
+import { Language } from '../enums';
 
 @Entity()
 @ObjectType()
@@ -34,6 +35,10 @@ export class User extends BaseEntity {
   @Field()
   @Column('bool', { default: false })
   public confirmed: boolean;
+
+  @Field()
+  @Column('enum', { enum: Language, nullable: true })
+  public preferredLanguage: Language;
 
   @Field()
   @CreateDateColumn({ type: 'timestamp' })

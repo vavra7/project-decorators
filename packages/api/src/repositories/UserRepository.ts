@@ -16,6 +16,7 @@ export class UserRepository extends AbstractRepository<User> {
     firstName: User['firstName'];
     lastName: User['lastName'];
     password: User['password'];
+    preferredLanguage?: User['preferredLanguage'];
   }): Promise<User> {
     return this.manager.save(Object.assign(new User(), newUser));
   }

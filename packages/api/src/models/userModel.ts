@@ -23,6 +23,6 @@ export class RegisterUserInput {
   @Field(() => String)
   public password: string;
 
-  @Field(() => GqlLanguage, { nullable: true })
-  public language: Language;
+  @Field(() => GqlLanguage, { nullable: true, description: "User's preferred language." })
+  public preferredLanguage: Language;
 }

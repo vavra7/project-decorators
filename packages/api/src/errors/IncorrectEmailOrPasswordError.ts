@@ -1,4 +1,4 @@
-import { ErrorCode } from '@project-decorators/shared';
+import { ErrorCode } from '../enums';
 import { ErrorInterface } from '../types';
 
 export class IncorrectEmailOrPasswordError extends Error implements ErrorInterface {

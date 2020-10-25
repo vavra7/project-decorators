@@ -13,4 +13,14 @@ export class ConfirmEmailRepository {
     await this.client.set(key, userId, 'EX', this.expire);
     return key;
   }
+
+  public async findAndDelete(key: string): Promise<string | null> {
+    const userId = await this.client.get(key);
+    if (userId) {
+      this.client.del(key);
+      return userId;
+    } else {
+      return null;
+    }
+  }
 }

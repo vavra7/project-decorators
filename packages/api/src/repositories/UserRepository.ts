@@ -1,5 +1,6 @@
 import { AbstractRepository, EntityRepository } from 'typeorm';
 import { User } from '../entities';
+import { DataNotFoundError } from '../errors';
 
 @EntityRepository(User)
 export class UserRepository extends AbstractRepository<User> {
@@ -19,5 +20,13 @@ export class UserRepository extends AbstractRepository<User> {
     preferredLanguage?: User['preferredLanguage'];
   }): Promise<User> {
     return this.manager.save(Object.assign(new User(), newUser));
+  }
+
+  public async setConfirmed(userId: User['id']): Promise<User> {
+    const user = await this.findById(userId);
+    if (!user) throw new DataNotFoundError('User');
+    user.confirmed = true;
+    user.save();
+    return user;
   }
 }

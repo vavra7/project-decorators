@@ -1,14 +1,14 @@
 import { ErrorCode } from '../enums';
 import { ErrorInterface } from '../types';
 
-export class NotAuthenticatedError extends Error implements ErrorInterface {
+export class IncorrectTokenError extends Error implements ErrorInterface {
   constructor() {
-    super('User is not authenticated or authentication expired');
+    super('Token is incorrect or has expired');
     Object.setPrototypeOf(this, new.target.prototype);
   }
 
   public getCode(): ErrorCode {
-    return ErrorCode.NotAuthenticated;
+    return ErrorCode.IncorrectToken;
   }
 
   public getStatus(): number {

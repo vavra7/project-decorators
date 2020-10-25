@@ -3,5 +3,6 @@ export enum ErrorCode {
   InvalidArguments = 'INVALID_ARGUMENTS',
   IncorrectEmailOrPassword = 'INCORRECT_EMAIL_OR_PASSWORD',
   NotAuthenticated = 'NOT_AUTHENTICATED',
-  DataNotFound = 'DATA_NOT_FOUND'
+  DataNotFound = 'DATA_NOT_FOUND',
+  IncorrectToken = 'INCORRECT_TOKEN'
 }

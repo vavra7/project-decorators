@@ -3,7 +3,7 @@ import { Inject, Service } from 'typedi';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { clientUrl, defaultLang } from '../config';
 import { User } from '../entities';
-import { DataNotFoundError } from '../errors';
+import { DataNotFoundError, IncorrectTokenError } from '../errors';
 import { RegisterUserInput } from '../models';
 import { ConfirmEmailRepository, UserRepository } from '../repositories';
 import { BcryptPasswordService, NodemailerService } from '../services';
@@ -47,6 +47,13 @@ export class UserHandler {
       subject: 'Confirm Email ✔',
       html: `<a href="${url}">${url}</a>`
     });
+    return user;
+  }
+
+  public async confirmEmail(token: string): Promise<User> {
+    const userId = await this.confirmEmailRepository.findAndDelete(token);
+    if (!userId) throw new IncorrectTokenError();
+    const user = this.userRepository.setConfirmed(userId);
     return user;
   }
 }

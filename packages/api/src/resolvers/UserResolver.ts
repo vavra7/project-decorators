@@ -26,4 +26,9 @@ export class UserResolver {
   ): Promise<User> {
     return this.handler.register(data);
   }
+
+  @Mutation(() => User, { name: 'confirmEmailUser' })
+  public confirmEmail(@Arg('token') token: string): Promise<User> {
+    return this.handler.confirmEmail(token);
+  }
 }

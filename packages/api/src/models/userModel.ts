@@ -1,28 +1,23 @@
-import { IsEmail, Length } from 'class-validator';
+import { RegisterUserBase } from '@project-decorators/shared';
 import { Field, InputType } from 'type-graphql';
 import { GqlLanguage, Language } from '../enums';
 import { IsUserEmailUnique } from '../validations';
 
 @InputType()
-export class RegisterUserInput {
-  @Length(5, 100)
-  @IsEmail()
+export class RegisterUserInput extends RegisterUserBase {
   @IsUserEmailUnique()
   @Field(() => String)
   public email: string;
 
-  @Length(2, 100)
   @Field(() => String)
   public firstName: string;
 
-  @Length(2, 100)
   @Field(() => String)
   public lastName: string;
 
-  @Length(5, 100)
   @Field(() => String)
   public password: string;
 
   @Field(() => GqlLanguage, { nullable: true, description: "User's preferred language." })
-  public preferredLanguage: Language;
+  public preferredLanguage?: Language;
 }

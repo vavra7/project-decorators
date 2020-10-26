@@ -21,6 +21,13 @@ export const routesDefinition: RoutesDefinition<Route, Language> = [
     }
   },
   {
+    name: Route.Register,
+    pathname: {
+      cs: '/registrace',
+      en: '/en/register'
+    }
+  },
+  {
     name: Route.ConfirmEmail,
     pathname: {
       cs: '/potvrdit-email/[token]',

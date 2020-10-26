@@ -2,6 +2,7 @@
   "route": {
     "home": "Home",
     "login": "Login",
+    "register": "Register",
     "confirmEmail": "Confirm Email",
     "userProfile": "Profile"
   }

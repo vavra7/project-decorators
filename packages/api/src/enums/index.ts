@@ -1,2 +1,1 @@
-export * from './ErrorCode';
-export * from './Language';
+export { ErrorCode, GqlLanguage, Language } from '@project-decorators/shared';

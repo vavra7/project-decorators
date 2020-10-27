@@ -1,0 +1,10 @@
+{
+  "user": {
+    "email": "Email",
+    "firstName": "Křestní jméno",
+    "lastName": "Příjmení",
+    "password": "Heslo",
+    "preferredLanguage": "Preferovaný jazyk",
+    "confirmPassword": "Potvrzení hesla"
+  }
+}

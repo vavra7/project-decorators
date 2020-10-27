@@ -1,0 +1,6 @@
+{
+  "isEmail": "Pole {name} musí být platná emailová adresa",
+  "isNotEmpty": "Pole {name} by nemělo být prázdné",
+  "length": "Pole {name} může být o délce {prop0} až {prop1} znaků",
+  "isEnum": "Pole {name} musí být hodnota z číselníku '{prop0}'"
+}

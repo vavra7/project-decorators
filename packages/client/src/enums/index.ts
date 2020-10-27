@@ -1,2 +1,1 @@
-export * from './Language';
-export * from './Route';
+export { Language, Route } from '@project-decorators/shared';

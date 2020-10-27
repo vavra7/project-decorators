@@ -36,7 +36,7 @@ const Register: NextPage = () => {
           {formik => (
             <Form style={{ display: 'flex', flexDirection: 'column' }}>
               <label htmlFor="email">Email</label>
-              <Field name="email" />
+              <Field label="Email" name="email" />
 
               <label htmlFor="firstName">First Name</label>
               <Field name="firstName" />

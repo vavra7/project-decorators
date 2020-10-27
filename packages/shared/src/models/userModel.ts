@@ -1,10 +1,11 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsOptional, Length } from 'class-validator';
 import { Language } from '../enums';
+import { IsEmail, IsEnum, IsNotEmpty, IsOptional, Length } from '../validations';
 
 export class RegisterUserBase {
   @Length(5, 100)
   @IsEmail()
   @IsNotEmpty()
+  @IsEnum(Language)
   public email: string;
 
   @Length(2, 100)

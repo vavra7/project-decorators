@@ -1,7 +1,7 @@
 import { Language, Route } from '../enums';
 
-export type RoutesDefinition<R, L extends string> = {
-  name: R;
+export type RoutesDefinition<N, L extends string> = {
+  name: N;
   pathname: Record<L, string>;
 }[];
 

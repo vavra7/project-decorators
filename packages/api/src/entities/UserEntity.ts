@@ -28,7 +28,6 @@ export class User extends BaseEntity {
   @Column('varchar', { length: 50 })
   public lastName: string;
 
-  @Field()
   @Column('text')
   public password: string;
 

@@ -11,7 +11,7 @@ export async function validator(form: any): Promise<{}> {
     const errorMessages: string[] = [];
     for (const constraint in err.constraints) {
       const context = err.contexts && err.contexts[constraint];
-      const fieldNameTranslation = t(translationPath + err.property).toLowerCase();
+      const fieldNameTranslation = t(`${translationPath}.${err.property}`).toLowerCase();
       errorMessages.push(
         t(`commons.validations.${constraint}`, {
           ...context,

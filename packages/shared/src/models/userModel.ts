@@ -1,22 +1,25 @@
 import { Language } from '../enums';
-import { IsEmail, IsEnum, IsNotEmpty, IsOptional, Length } from '../validations';
+import { IsEmail, IsEnum, IsNotEmpty, IsOptional, MaxLength, MinLength } from '../validations';
 
 export class RegisterUserBase {
-  @Length(5, 100)
+  @MaxLength(100)
+  @MinLength(5)
   @IsEmail()
   @IsNotEmpty()
-  @IsEnum(Language)
   public email: string;
 
-  @Length(2, 100)
+  @MaxLength(100)
+  @MinLength(2)
   @IsNotEmpty()
   public firstName: string;
 
-  @Length(2, 100)
+  @MaxLength(100)
+  @MinLength(2)
   @IsNotEmpty()
   public lastName: string;
 
-  @Length(5, 100)
+  @MaxLength(100)
+  @MinLength(5)
   @IsNotEmpty()
   public password: string;
 

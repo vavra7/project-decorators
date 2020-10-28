@@ -1,21 +1,34 @@
+import { useMutation } from '@apollo/client';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { NextPage } from 'next';
 import { Container } from '../components/commons';
 import Layout1 from '../components/layouts/Layout1';
+import {
+  RegisterUserMutation,
+  registerUserMutation,
+  RegisterUserMutationVariables
+} from '../graphql';
 import { RegisterUserForm } from '../model';
 import { validator } from '../utils';
 
 const Register: NextPage = () => {
-  const onSubmit = (
+  const [registerUser] = useMutation<RegisterUserMutation, RegisterUserMutationVariables>(
+    registerUserMutation
+  );
+
+  const onSubmit = async (
     form: RegisterUserForm,
     { setSubmitting }: FormikHelpers<RegisterUserForm>
-  ): void => {
+  ): Promise<void> => {
     console.log('formik is submitting...');
+    const res = await registerUser({
+      variables: {
+        data: form
+      }
+    });
+    console.log('Register:NextPage -> res', res);
 
-    setTimeout(() => {
-      console.log('sent');
-      setSubmitting(false);
-    }, 1000);
+    setSubmitting(false);
   };
 
   return (

@@ -18,16 +18,15 @@ const Register: NextPage = () => {
 
   const onSubmit = async (
     form: RegisterUserForm,
-    { setSubmitting }: FormikHelpers<RegisterUserForm>
+    { setSubmitting, resetForm }: FormikHelpers<RegisterUserForm>
   ): Promise<void> => {
     console.log('formik is submitting...');
-    const res = await registerUser({
+    const { data } = await registerUser({
       variables: {
-        data: form
+        data: form.getData()
       }
     });
-    console.log('Register:NextPage -> res', res);
-
+    if (data) resetForm();
     setSubmitting(false);
   };
 

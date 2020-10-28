@@ -1,5 +1,6 @@
 import { sign, verify } from 'jsonwebtoken';
 import { Service } from 'typedi';
+import { accessTokenSecret, refreshTokenSecret } from '../config';
 
 export interface GeneratedTokenData {
   token: string;
@@ -22,7 +23,7 @@ export class JwtAuthService {
 
   public generateAccessToken(payload: TokenPayload): GeneratedTokenData {
     return {
-      token: sign(payload, process.env.ACCESS_TOKEN_SECRET || 'ACCESS_TOKEN_SECRET', {
+      token: sign(payload, accessTokenSecret, {
         expiresIn: this.accessTokenExpiration
       }),
       expiresIn: this.accessTokenExpiration
@@ -31,7 +32,7 @@ export class JwtAuthService {
 
   public generateRefreshToken(payload: TokenPayload): GeneratedTokenData {
     return {
-      token: sign(payload, process.env.REFRESH_TOKEN || 'REFRESH_TOKEN', {
+      token: sign(payload, refreshTokenSecret, {
         expiresIn: this.refreshTokenExpiration
       }),
       expiresIn: this.refreshTokenExpiration
@@ -41,10 +42,7 @@ export class JwtAuthService {
   public verifyAccessToken(token: string): null | TokenVerifyPayload {
     let tokenVerifyPayload: TokenVerifyPayload;
     try {
-      tokenVerifyPayload = verify(
-        token,
-        process.env.ACCESS_TOKEN_SECRET || 'ACCESS_TOKEN_SECRET'
-      ) as any;
+      tokenVerifyPayload = verify(token, accessTokenSecret) as any;
     } catch {
       return null;
     }
@@ -54,7 +52,7 @@ export class JwtAuthService {
   public verifyRefreshToken(token: string): null | TokenVerifyPayload {
     let tokenVerifyPayload: TokenVerifyPayload;
     try {
-      tokenVerifyPayload = verify(token, process.env.REFRESH_TOKEN || 'REFRESH_TOKEN') as any;
+      tokenVerifyPayload = verify(token, refreshTokenSecret) as any;
     } catch {
       return null;
     }

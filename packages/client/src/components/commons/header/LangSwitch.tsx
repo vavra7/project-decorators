@@ -3,10 +3,10 @@ import { Link } from '../';
 import { Language, Route } from '../../../enums';
 import { i18n, InjectedRouter, routesDefinition, WithRouter } from '../../../utils';
 
-interface Props extends InjectedRouter {}
+interface LangSwitchProps extends InjectedRouter {}
 
 @WithRouter()
-class LangSwitch extends PureComponent<Props> {
+class LangSwitch extends PureComponent<LangSwitchProps> {
   private getCurrentRouteName(): Route | undefined {
     return routesDefinition.find(route => route.pathname[i18n.lang] === this.props.router!.pathname)
       ?.name;

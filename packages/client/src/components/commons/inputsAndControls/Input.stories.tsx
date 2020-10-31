@@ -9,8 +9,12 @@ export default {
 const Template: Story<InputProps> = args => <Input {...args} />;
 
 export const Text = Template.bind({});
+Text.args = {
+  label: 'Label'
+};
 
 export const Number = Template.bind({});
 Number.args = {
+  ...Text.args,
   type: 'number'
 };

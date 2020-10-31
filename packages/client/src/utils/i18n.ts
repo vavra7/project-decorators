@@ -29,7 +29,11 @@ export class I18n<T extends string> {
       console.warn('Did not find "%s" translation for path: "%s".', this.lang, path);
       return path;
     } else {
-      return params ? this.embedParams(translation, params) : translation;
+      if (typeof translation !== 'string') {
+        return JSON.stringify(translation);
+      } else {
+        return params ? this.embedParams(translation, params) : translation;
+      }
     }
   }
 

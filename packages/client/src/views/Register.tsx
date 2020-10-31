@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { NextPage } from 'next';
-import { Container } from '../components/commons';
+import { Container, Input } from '../components/commons';
 import Layout1 from '../components/layouts/Layout1';
 import {
   RegisterUserMutation,
@@ -59,14 +59,22 @@ const Register: NextPage = () => {
               <label htmlFor="password">Password</label>
               <Field name="password" type="password" />
 
-              <label htmlFor="confirmPassword">Confirm Password</label>
-              <Field name="confirmPassword" type="password" />
+              <Field component={Input} label name="confirmPassword" type="password" />
 
               <button type="submit">submit</button>
               <pre>{JSON.stringify(formik, null, 4)}</pre>
             </Form>
           )}
         </Formik>
+        <Input
+          errors={['asd']}
+          label="ad"
+          name="bobek"
+          onBlur={() => console.log('blur')}
+          onChange={() => console.log('change')}
+          onFocus={() => console.log('focus')}
+          value="asdf sdfa fsdaf a"
+        />
       </Container>
     </Layout1>
   );

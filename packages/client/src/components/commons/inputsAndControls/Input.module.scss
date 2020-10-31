@@ -1,0 +1,9 @@
+.inputWrapper {
+  background: rgb(179, 179, 225);
+  display: flex;
+  flex-direction: column;
+
+  &.error > input {
+    border: solid red 1px;
+  }
+}

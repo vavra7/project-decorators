@@ -6,7 +6,7 @@ import { Assign, DefaultProps } from '../../../types';
 import { t } from '../../../utils/i18n';
 import styles from './Input.module.scss';
 
-interface InputProps extends Partial<FieldProps> {
+export interface InputProps extends Partial<FieldProps> {
   type?: 'text' | 'number' | 'password';
   label?: string | boolean;
   value: string | number;
@@ -41,7 +41,8 @@ export class Input extends Component<InputPropsWithDefault, InputState> {
     super(props);
     this.state = {
       isFormik: this.isFormik(),
-      touched: this.props.form && this.props.field ? false : true,
+      touched: this.isFormik() ? false : true,
+      errorMessage: this.getErrorMessage(),
       label: this.getLabel(),
       inputId: this.getInputId()
     };
@@ -62,10 +63,10 @@ export class Input extends Component<InputPropsWithDefault, InputState> {
       prevProps.form!.errors[prevProps.field!.name] !==
         this.props.form!.errors[this.props.field!.name]
     ) {
-      this.setState({ errorMessage: this.props.form!.errors[this.props.field!.name] as string });
+      this.setState({ errorMessage: this.getErrorMessage() });
     }
     if (!this.state.isFormik && prevProps.errors[0] !== this.props.errors[0]) {
-      this.setState({ errorMessage: this.props.errors[0] });
+      this.setState({ errorMessage: this.getErrorMessage() });
     }
     // label
     if (prevProps.label !== this.props.label) {
@@ -82,6 +83,14 @@ export class Input extends Component<InputPropsWithDefault, InputState> {
       return t(`${this.props.form!.values.translationPath}.${this.props.field!.name}`);
     } else if (typeof this.props.label === 'string') {
       return this.props.label;
+    }
+  }
+
+  private getErrorMessage(): string | undefined {
+    if (this.isFormik()) {
+      return this.props.form!.errors[this.props.field!.name] as string | undefined;
+    } else {
+      return this.props.errors[0];
     }
   }
 

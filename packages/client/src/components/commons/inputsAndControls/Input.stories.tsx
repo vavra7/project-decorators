@@ -18,3 +18,9 @@ Number.args = {
   ...Text.args,
   type: 'number'
 };
+
+export const Error = Template.bind({});
+Error.args = {
+  ...Text.args,
+  errors: ['Some ugly error']
+};

@@ -33,6 +33,13 @@
           "constructors": "no-public"
         }
       }
-    ]
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      1,
+      {
+        "ignoreRestSiblings": true
+      }
+    ],
+    "prettier/prettier": 1
   }
 }

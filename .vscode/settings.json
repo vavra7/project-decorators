@@ -4,6 +4,7 @@
     "citext",
     "codegen",
     "dev",
+    "esnext",
     "formik",
     "graphgl",
     "middlewares",

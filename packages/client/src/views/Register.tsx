@@ -67,13 +67,13 @@ const Register: NextPage = () => {
           )}
         </Formik>
         <Input
-          errors={['asd']}
+          error="error"
           label="ad"
           name="bobek"
           onBlur={() => console.log('blur')}
           onChange={() => console.log('change')}
           onFocus={() => console.log('focus')}
-          value="asdf sdfa fsdaf a"
+          value="some value"
         />
       </Container>
     </Layout1>

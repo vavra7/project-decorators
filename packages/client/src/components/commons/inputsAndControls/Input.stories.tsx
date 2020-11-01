@@ -22,5 +22,5 @@ Number.args = {
 export const Error = Template.bind({});
 Error.args = {
   ...Text.args,
-  errors: ['Some ugly error']
+  error: 'Some ugly error'
 };

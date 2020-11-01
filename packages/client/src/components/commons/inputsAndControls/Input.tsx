@@ -1,16 +1,16 @@
 import cn from 'classnames';
 import { FieldProps } from 'formik';
 import _uniqueId from 'lodash/uniqueId';
-import { Component, ReactElement } from 'react';
+import { PureComponent, ReactElement } from 'react';
+import { FormikField } from '../../../decorators';
 import { Assign, DefaultProps } from '../../../types';
-import { t } from '../../../utils/i18n';
 import styles from './Input.module.scss';
 
 export interface InputProps extends Partial<FieldProps> {
   type?: 'text' | 'number' | 'password';
-  label?: string | boolean;
+  label?: string;
   value: string | number;
-  errors?: string[];
+  error?: string;
   onChange?(e: React.ChangeEvent<HTMLInputElement>): void;
   onBlur?(e: React.FocusEvent<HTMLInputElement>): void;
   onFocus?(e: React.FocusEvent<HTMLInputElement>): void;
@@ -21,118 +21,51 @@ export interface InputProps extends Partial<FieldProps> {
   style?: { [key: string]: string };
 }
 
-interface InputState {
-  isFormik: boolean;
-  touched: boolean;
-  errorMessage?: string;
-  label?: string;
-  inputId: string;
-}
-
 type InputPropsWithDefault = Assign<InputProps, typeof Input.defaultProps>;
 
-export class Input extends Component<InputPropsWithDefault, InputState> {
-  public static readonly defaultProps: DefaultProps<InputProps, 'errors' | 'type'> = {
-    errors: [],
+@FormikField()
+export class Input extends PureComponent<InputPropsWithDefault> {
+  public static readonly defaultProps: DefaultProps<InputProps, 'type'> = {
     type: 'text'
   };
 
+  private inputId: string;
+
   constructor(props: any) {
     super(props);
-    this.state = {
-      isFormik: this.isFormik(),
-      touched: this.isFormik() ? false : true,
-      errorMessage: this.getErrorMessage(),
-      label: this.getLabel(),
-      inputId: this.getInputId()
-    };
-  }
-
-  public componentDidUpdate(prevProps: InputPropsWithDefault): void {
-    // touched
-    if (
-      this.state.isFormik &&
-      prevProps.form!.touched[prevProps.field!.name] !==
-        this.props.form!.touched[this.props.field!.name]
-    ) {
-      this.setState({ touched: !!this.props.form!.touched[this.props.field!.name] });
-    }
-    // error message
-    if (
-      this.state.isFormik &&
-      prevProps.form!.errors[prevProps.field!.name] !==
-        this.props.form!.errors[this.props.field!.name]
-    ) {
-      this.setState({ errorMessage: this.getErrorMessage() });
-    }
-    if (!this.state.isFormik && prevProps.errors[0] !== this.props.errors[0]) {
-      this.setState({ errorMessage: this.getErrorMessage() });
-    }
-    // label
-    if (prevProps.label !== this.props.label) {
-      this.setState({ label: this.getLabel() });
-    }
-  }
-
-  private isFormik(): boolean {
-    return !!(this.props.form && this.props.field);
-  }
-
-  private getLabel(): string | undefined {
-    if (this.isFormik() && typeof this.props.label === 'boolean') {
-      return t(`${this.props.form!.values.translationPath}.${this.props.field!.name}`);
-    } else if (typeof this.props.label === 'string') {
-      return this.props.label;
-    }
-  }
-
-  private getErrorMessage(): string | undefined {
-    if (this.isFormik()) {
-      return this.props.form!.errors[this.props.field!.name] as string | undefined;
-    } else {
-      return this.props.errors[0];
-    }
+    this.inputId = this.getInputId();
   }
 
   private getInputId(): string {
-    if (this.isFormik()) {
-      return `input-${this.props.field!.name}`;
-    } else if (this.props.name) {
+    if (this.props.name) {
       return `input-${this.props.name}`;
     } else {
       return `input-${_uniqueId()}`;
     }
   }
 
-  private restInputProps(): any {
-    if (this.state.isFormik) {
-      return this.props.field;
-    } else {
-      return {
-        value: this.props.value,
-        onChange: this.props.onChange,
-        onBlur: this.props.onBlur,
-        onFocus: this.props.onFocus
-      };
-    }
-  }
-
   public render(): ReactElement {
-    const { errorMessage, touched, label, inputId } = this.state;
-    const { type, id, className, style } = this.props;
     return (
       <div
         className={cn({
-          [className || '']: className,
+          [this.props.className || '']: this.props.className,
           [styles.inputWrapper]: true,
-          [styles.error]: errorMessage && touched
+          [styles.error]: this.props.error
         })}
-        id={id}
-        style={style}
+        id={this.props.id}
+        style={this.props.style}
       >
-        <label htmlFor={inputId}>{label}</label>
-        <input id={inputId} type={type} {...this.restInputProps()} />
-        <div>{touched && errorMessage}</div>
+        <label htmlFor={this.inputId}>{this.props.label}</label>
+        <input
+          id={this.inputId}
+          name={this.props.name}
+          onBlur={this.props.onBlur}
+          onChange={this.props.onChange}
+          onFocus={this.props.onFocus}
+          type={this.props.type}
+          value={this.props.value}
+        />
+        <div>{this.props.error}</div>
       </div>
     );
   }

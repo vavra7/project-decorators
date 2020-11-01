@@ -1,6 +1,6 @@
+import { BindThis } from '../decorators';
 import { Language } from '../enums';
 import translations from '../translations';
-import { BindThis } from './BindThis';
 
 interface I18nOptions<T extends string> {
   defaultLang: T;

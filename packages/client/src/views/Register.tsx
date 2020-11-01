@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { NextPage } from 'next';
-import { Container, Input } from '../components/commons';
+import { Col, Container, Input, Row } from '../components/commons';
 import Layout1 from '../components/layouts/Layout1';
 import {
   RegisterUserMutation,
@@ -47,26 +47,18 @@ const Register: NextPage = () => {
         >
           {formik => (
             <Form style={{ display: 'flex', flexDirection: 'column' }}>
-              <label htmlFor="email">Email</label>
-              <Field label="Email" name="email" />
-
-              <label htmlFor="firstName">First Name</label>
-              <Field name="firstName" />
-
-              <label htmlFor="lastName">Last Name</label>
-              <Field name="lastName" />
-
-              <label htmlFor="password">Password</label>
-              <Field name="password" type="password" />
-
+              <Field component={Input} label name="email" />
+              <Field component={Input} label name="firstName" />
+              <Field component={Input} label name="lastName" />
+              <Field component={Input} label name="password" type="password" />
               <Field component={Input} label name="confirmPassword" type="password" />
-
               <button type="submit">submit</button>
               <pre>{JSON.stringify(formik, null, 4)}</pre>
             </Form>
           )}
         </Formik>
         <Input
+          className="ma-3"
           error="error"
           label="ad"
           name="bobek"
@@ -75,6 +67,9 @@ const Register: NextPage = () => {
           onFocus={() => console.log('focus')}
           value="some value"
         />
+        <Row>
+          <Col>Test</Col>
+        </Row>
       </Container>
     </Layout1>
   );

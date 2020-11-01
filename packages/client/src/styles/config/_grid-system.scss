@@ -1,6 +1,5 @@
-$base-size: 15px;
+@use './spacing';
 
-// grid system
 $xs: 0px;
 $sm: 600px;
 $md: 960px;
@@ -28,18 +27,12 @@ $breakpoints-max: (
   'xl': 99999px
 );
 
-// spacing
-$spaces: (
-  0: $base-size * 0,
-  1: $base-size * 0.25,
-  2: $base-size * 0.5,
-  3: $base-size * 1,
-  4: $base-size * 1.5,
-  5: $base-size * 3
+$content-widths: (
+	$sm: $sm-content-width,
+	$md: $md-content-width,
+	$lg: $lg-content-width,
+	$xl: $xl-content-width
 );
 
-// colors
-$primary: #418fbc;
-$success: #41bc9c;
-$info: #f7b84b;
-$error: #f1556c;
+$grid-gutter: spacing.$base-space * 2;
+$grid-columns: 12;

@@ -1,0 +1,13 @@
+@use '../config/spacing';
+
+$primary-font: 'Roboto', 'Arial';
+$secondary-font: 'Cinzel', 'Arial';
+
+%label {
+  font-size: 0.9rem;
+  @extend %mb-1;
+}
+
+%caption {
+  font-size: 0.8rem;
+}

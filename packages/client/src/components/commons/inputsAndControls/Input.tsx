@@ -55,8 +55,11 @@ export class Input extends PureComponent<InputPropsWithDefault> {
         id={this.props.id}
         style={this.props.style}
       >
-        <label htmlFor={this.inputId}>{this.props.label}</label>
+        <label className={styles.label} htmlFor={this.inputId}>
+          {this.props.label}
+        </label>
         <input
+          className={styles.input}
           id={this.inputId}
           name={this.props.name}
           onBlur={this.props.onBlur}
@@ -65,7 +68,7 @@ export class Input extends PureComponent<InputPropsWithDefault> {
           type={this.props.type}
           value={this.props.value}
         />
-        <div>{this.props.error}</div>
+        <small className={styles.caption}>{this.props.error}</small>
       </div>
     );
   }

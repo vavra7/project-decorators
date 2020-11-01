@@ -1,0 +1,25 @@
+@use '../config/typography';
+@use '../config/spacing';
+@use '../config/colors';
+
+$error-color: colors.$error;
+
+%iac-wrapper {
+  @extend %mb-1;
+}
+
+%iac-label {
+  @extend %label;
+}
+
+%iac-input {
+  @extend %px-2;
+  border: 1px solid colors.$border;
+  height: 30px;
+}
+
+%iac-caption {
+  @extend %caption;
+  color: $error-color;
+  min-height: 20px;
+}

@@ -1,9 +1,23 @@
+@use '../../../styles/modules/inputs-and-controls' as iac;
+
 .inputWrapper {
-  background: rgb(179, 179, 225);
+  @extend %iac-wrapper;
   display: flex;
   flex-direction: column;
 
   &.error > input {
-    border: solid red 1px;
+    border-color: iac.$error-color;
+  }
+
+  .label {
+    @extend %iac-label;
+  }
+
+  .input {
+    @extend %iac-input;
+  }
+
+  .caption {
+    @extend %iac-caption;
   }
 }

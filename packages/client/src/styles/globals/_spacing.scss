@@ -1,0 +1,59 @@
+@use '../config/spacing';
+
+@each $space, $size in spacing.$spaces {
+  .ma-#{$space} {
+    @extend %ma-#{$space};
+  }
+
+  .mx-#{$space} {
+    @extend %mx-#{$space};
+  }
+
+  .my-#{$space} {
+    @extend %my-#{$space};
+  }
+
+  .mt-#{$space} {
+    @extend %mt-#{$space};
+  }
+
+  .mr-#{$space} {
+    @extend %mr-#{$space};
+  }
+
+  .mb-#{$space} {
+    @extend %mb-#{$space};
+  }
+
+  .ml-#{$space} {
+    @extend %ml-#{$space};
+  }
+
+  .pa-#{$space} {
+    @extend %pa-#{$space};
+  }
+
+  .px-#{$space} {
+    @extend %px-#{$space};
+  }
+
+  .py-#{$space} {
+    @extend %py-#{$space};
+  }
+
+  .pt-#{$space} {
+    @extend %pt-#{$space};
+  }
+
+  .pr-#{$space} {
+    @extend %pr-#{$space};
+  }
+
+  .pb-#{$space} {
+    @extend %pb-#{$space};
+  }
+
+  .pl-#{$space} {
+    @extend %pl-#{$space};
+  }
+}

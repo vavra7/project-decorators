@@ -1,63 +1,72 @@
-@import './variables';
+$base-space: 15px;
+
+$spaces: (
+  0: $base-space * 0,
+  1: $base-space * 0.25,
+  2: $base-space * 0.5,
+  3: $base-space * 1,
+  4: $base-space * 1.5,
+  5: $base-space * 3
+);
 
 @each $space, $size in $spaces {
-  .ma-#{$space} {
+  %ma-#{$space} {
     margin: $size;
   }
 
-  .mx-#{$space} {
+  %mx-#{$space} {
     margin-left: $size;
     margin-right: $size;
   }
 
-  .my-#{$space} {
+  %my-#{$space} {
     margin-top: $size;
     margin-bottom: $size;
   }
 
-  .mt-#{$space} {
+  %mt-#{$space} {
     margin-top: $size;
   }
 
-  .mr-#{$space} {
+  %mr-#{$space} {
     margin-right: $size;
   }
 
-  .mb-#{$space} {
+  %mb-#{$space} {
     margin-bottom: $size;
   }
 
-  .ml-#{$space} {
+  %ml-#{$space} {
     margin-left: $size;
   }
 
-  .pa-#{$space} {
+  %pa-#{$space} {
     padding: $size;
   }
 
-  .px-#{$space} {
+  %px-#{$space} {
     padding-left: $size;
     padding-right: $size;
   }
 
-  .py-#{$space} {
+  %py-#{$space} {
     padding-top: $size;
     padding-bottom: $size;
   }
 
-  .pt-#{$space} {
+  %pt-#{$space} {
     padding-top: $size;
   }
 
-	.pr-#{$space} {
+  %pr-#{$space} {
     padding-right: $size;
   }
-	
-	.pb-#{$space} {
+
+  %pb-#{$space} {
     padding-bottom: $size;
   }
-	
-	.pl-#{$space} {
+
+  %pl-#{$space} {
     padding-left: $size;
   }
 }

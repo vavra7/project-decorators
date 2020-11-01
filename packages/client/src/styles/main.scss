@@ -1,7 +1,7 @@
-@import './gridSystem';
-@import './typography';
-@import './spacing';
-@import './positioning';
+@use './globals/grid-system';
+@use './globals/spacing';
+@use './globals/positioning';
+@use './globals/typography';
 
 *,
 *::before,

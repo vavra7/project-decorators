@@ -1,0 +1,43 @@
+@use '../config/typography';
+@use '../config/colors';
+
+body {
+  font-family: typography.$primary-font;
+	font-weight: 300;
+	line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: typography.$secondary-font;
+}
+
+a {
+  color: colors.$primary;
+}
+
+.label {
+  @extend %label;
+}
+
+.caption {
+  @extend %caption;
+}
+
+$-font-weight-list: (bolder, bold);
+
+@each $option in $-font-weight-list {
+  .fw-#{$option} {
+    font-weight: $option;
+  }
+}
+
+$-font-weight-list: (bolder, bold);
+
+@each $option in $-font-weight-list {
+  .fw-#{$option} {
+    font-weight: $option;
+  }
+}

@@ -3,11 +3,10 @@ import { FieldProps } from 'formik';
 import _uniqueId from 'lodash/uniqueId';
 import { PureComponent, ReactElement } from 'react';
 import { FormikField } from '../../../decorators';
-import { Assign, DefaultProps } from '../../../types';
 import styles from './Input.module.scss';
 
 export interface InputProps extends Partial<FieldProps> {
-  type?: 'text' | 'number' | 'password';
+  type: 'text' | 'number' | 'password';
   label?: string;
   value: string | number;
   error?: string;
@@ -21,11 +20,9 @@ export interface InputProps extends Partial<FieldProps> {
   style?: { [key: string]: string };
 }
 
-type InputPropsWithDefault = Assign<InputProps, typeof Input.defaultProps>;
-
 @FormikField()
-export class Input extends PureComponent<InputPropsWithDefault> {
-  public static readonly defaultProps: DefaultProps<InputProps, 'type'> = {
+export class Input extends PureComponent<InputProps> {
+  public static readonly defaultProps: Partial<InputProps> = {
     type: 'text'
   };
 

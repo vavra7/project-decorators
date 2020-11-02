@@ -1,0 +1,34 @@
+@use '../../styles/config/colors';
+@use '../../styles/config/spacing';
+
+$border-style: solid;
+$border-width: 1px;
+$lighten-amount: 20%;
+
+.button {
+  border-style: $border-style;
+  border-width: $border-width;
+  border-color: colors.$primary;
+  color: white;
+  background: colors.$primary;
+  font-weight: bold;
+  cursor: pointer;
+  min-width: 90px;
+  @extend %pa-2;
+
+  &.disabled {
+    border-color: lighten(colors.$primary, $lighten-amount);
+    background: lighten(colors.$primary, $lighten-amount);
+  }
+
+  &.secondary {
+    background: white;
+    color: colors.$primary;
+  }
+
+  &.secondary.disabled {
+    background: white;
+    color: lighten(colors.$primary, $lighten-amount);
+    border-color: lighten(colors.$primary, $lighten-amount);
+  }
+}

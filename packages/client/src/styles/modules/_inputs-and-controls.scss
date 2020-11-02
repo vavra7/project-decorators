@@ -13,9 +13,8 @@ $error-color: colors.$error;
 }
 
 %iac-input {
-  @extend %px-2;
+  @extend %pa-2;
   border: 1px solid colors.$border;
-  height: 30px;
 }
 
 %iac-caption {

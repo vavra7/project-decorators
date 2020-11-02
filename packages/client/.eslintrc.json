@@ -9,7 +9,6 @@
   "rules": {
     "react/react-in-jsx-scope": 0,
     "react/prop-types": 0,
-    "react/button-has-type": 1,
     "react/jsx-sort-props": [
       1,
       {
